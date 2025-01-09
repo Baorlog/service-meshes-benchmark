@@ -1,0 +1,20 @@
+- name: Initialize Kubernetes cluster
+  shell: |
+    kubeadm init --pod-network-cidr=192.168.0.0/16
+  args:
+    creates: /etc/kubernetes/admin.conf
+
+- name: Copy kubeconfig to user's home directory
+  command: mkdir -p /root/.kube
+  ignore_errors: yes
+
+- name: Set up kubeconfig for kubectl
+  copy:
+    src: /etc/kubernetes/admin.conf
+    dest: /root/.kube/config
+
+- name: Install Calico network plugin
+  shell: |
+    kubectl apply -f https://docs.projectcalico.org/v3.25/manifests/calico.yaml
+  args:
+    executable: /bin/bash
