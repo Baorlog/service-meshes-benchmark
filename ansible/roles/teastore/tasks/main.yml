@@ -1,0 +1,25 @@
+- name: Ensure namespace exists
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: teastore
+
+- name: Copy manifest file to target host
+  copy:
+    src: files/teastore-deployment.yml
+    dest: /tmp/teastore-deployment.yml
+
+- name: Apply TeaStore deployment
+  kubernetes.core.k8s:
+    state: present
+    src: /tmp/teastore-deployment.yml
+
+- name: Verify TeaStore pods are running
+  shell: |
+    kubectl get pods -n teastore
+  register: teastore_pods
+  changed_when: false
+  failed_when: "'Running' not in teastore_pods.stdout"

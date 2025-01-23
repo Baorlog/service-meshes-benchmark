@@ -1,0 +1,20 @@
+- name: Create namespace for Grafana
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: monitoring
+
+- name: Deploy Grafana
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('file', 'templates/grafana-deployment.yml') }}"
+
+- name: Verify Grafana deployment
+  shell: |
+    kubectl get pods -n monitoring -l app=grafana
+  register: grafana_pods
+  changed_when: false
+  failed_when: "'Running' not in grafana_pods.stdout"

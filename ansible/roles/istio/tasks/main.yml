@@ -1,0 +1,50 @@
+- name: Download Istio release
+  get_url:
+    url: "https://github.com/istio/istio/releases/download/1.18.0/istio-1.18.0-linux-amd64.tar.gz"
+    dest: "/tmp/istio.tar.gz"
+    mode: '0644'
+
+- name: Extract Istio release
+  unarchive:
+    src: "/tmp/istio.tar.gz"
+    dest: "/usr/local/"
+    remote_src: yes
+
+- name: Set ISTIOCTL_HOME environment variable
+  shell: |
+    export PATH=$PATH:/usr/local/istio-1.18.0/bin
+    echo 'export PATH=$PATH:/usr/local/istio-1.18.0/bin' >> /etc/profile
+  args:
+    executable: /bin/bash
+
+- name: Verify istioctl installation
+  command: istioctl version
+  register: istioctl_version
+  failed_when: "'istioctl' not in istioctl_version.stdout"
+  ignore_errors: no
+
+- name: Install Istio using default profile
+  shell: |
+    istioctl install --set profile=default -y
+  args:
+    executable: /bin/bash
+
+- name: Verify Istio pods are running
+  shell: |
+    kubectl get pods -n istio-system
+  register: istio_pods
+  changed_when: false
+  failed_when: "'Running' not in istio_pods.stdout"
+
+- name: Enable automatic sidecar injection for default namespace
+  shell: |
+    kubectl label namespace default istio-injection=enabled --overwrite
+  args:
+    executable: /bin/bash
+
+- name: Enable Istio addons
+  shell: |
+    kubectl apply -f /usr/local/istio-1.18.0/samples/addons
+  args:
+    executable: /bin/bash
+

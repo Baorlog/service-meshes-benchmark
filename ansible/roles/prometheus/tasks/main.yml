@@ -1,0 +1,20 @@
+- name: Create namespace for Prometheus
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Namespace
+      metadata:
+        name: monitoring
+
+- name: Deploy Prometheus
+  kubernetes.core.k8s:
+    state: present
+    definition: "{{ lookup('file', 'templates/prometheus-deployment.yml') }}"
+
+- name: Verify Prometheus deployment
+  shell: |
+    kubectl get pods -n monitoring -l app=prometheus
+  register: prometheus_pods
+  changed_when: false
+  failed_when: "'Running' not in prometheus_pods.stdout"

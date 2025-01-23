@@ -16,3 +16,25 @@
   become: yes
   roles:
     - kubernetes
+
+- name: Deploy TeaStore Application
+  hosts: k8s_master
+  become: yes
+  roles:
+    - teastore
+
+
+- name: Deploy Prometheus and Grafana
+  hosts: k8s_master
+  become: yes
+  roles:
+    - prometheus
+    - grafana
+
+
+- name: Deploy Istio
+  hosts: k8s_master
+  become: yes
+  roles:
+    - istio
+
