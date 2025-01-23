@@ -32,9 +32,16 @@
     - grafana
 
 
-- name: Deploy Istio
+# - name: Deploy Istio
+#   hosts: k8s_master
+#   become: yes
+#   roles:
+#     - istio
+
+- name: Install Linkerd Service Mesh
   hosts: k8s_master
   become: yes
   roles:
-    - istio
+    - linkerd
+
 
