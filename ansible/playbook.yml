@@ -1,35 +1,35 @@
-- name: Kubernetes Cluster Setup
-  hosts: all
-  become: yes
-  roles:
-    - common
+# - name: Kubernetes Cluster Setup
+#   hosts: all
+#   become: yes
+#   roles:
+#     - common
 
-- name: Configure Kubernetes Master
-  hosts: k8s_master
-  become: yes
-  roles:
-    - kubernetes
-    - kubernetes-master
+# - name: Configure Kubernetes Master
+#   hosts: k8s_master
+#   become: yes
+#   roles:
+#     - kubernetes
+#     - kubernetes-master
 
-- name: Configure Kubernetes Workers
-  hosts: k8s_worker
-  become: yes
-  roles:
-    - kubernetes
+# - name: Configure Kubernetes Workers
+#   hosts: k8s_worker
+#   become: yes
+#   roles:
+#     - kubernetes
 
 - name: Deploy TeaStore Application
-  hosts: k8s_master
+  hosts: k8s_worker
   become: yes
   roles:
     - teastore
 
 
-- name: Deploy Prometheus and Grafana
-  hosts: k8s_master
-  become: yes
-  roles:
-    - prometheus
-    - grafana
+# - name: Deploy Prometheus and Grafana
+#   hosts: k8s_master
+#   become: yes
+#   roles:
+#     - prometheus
+#     - grafana
 
 
 # - name: Deploy Istio
@@ -38,10 +38,10 @@
 #   roles:
 #     - istio
 
-- name: Install Linkerd Service Mesh
-  hosts: k8s_master
-  become: yes
-  roles:
-    - linkerd
+# - name: Install Linkerd Service Mesh
+#   hosts: k8s_master
+#   become: yes
+#   roles:
+#     - linkerd
 
 
