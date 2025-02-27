@@ -1,0 +1,112 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: onlineboutique-gateway
+  namespace: default
+spec:
+  selector:
+    istio: ingressgateway # Ensure this matches your Istio Ingress Gateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: frontend
+  namespace: default
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - onlineboutique-gateway
+  http:
+    - match:
+        - uri:
+            prefix: /
+      route:
+        - destination:
+            host: frontend
+            port:
+              number: 80
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: frontend
+  namespace: default
+spec:
+  host: frontend
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN
+    connectionPool:
+      http:
+        http2MaxRequests: 1000
+        maxRequestsPerConnection: 10
+    outlierDetection:
+      consecutiveErrors: 5
+      interval: 10s
+      baseEjectionTime: 30s
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: checkoutservice
+  namespace: default
+spec:
+  hosts:
+    - checkoutservice
+  http:
+    - route:
+        - destination:
+            host: checkoutservice
+            port:
+              number: 5050
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: checkoutservice
+  namespace: default
+spec:
+  host: checkoutservice
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: paymentservice
+  namespace: default
+spec:
+  hosts:
+    - paymentservice
+  http:
+    - route:
+        - destination:
+            host: paymentservice
+            port:
+              number: 50051
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: paymentservice
+  namespace: default
+spec:
+  host: paymentservice
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN

@@ -1,0 +1,127 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: appmesh-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: appmesh-controller
+  namespace: appmesh-system
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: appmesh-inject
+  namespace: appmesh-system
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: appmesh-controller
+rules:
+  - apiGroups:
+      - appmesh.k8s.aws
+    resources:
+      - '*'
+    verbs:
+      - '*'
+  - apiGroups:
+      - ""
+    resources:
+      - services
+      - endpoints
+      - pods
+    verbs:
+      - get
+      - list
+      - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: appmesh-controller-binding
+subjects:
+  - kind: ServiceAccount
+    name: appmesh-controller
+    namespace: appmesh-system
+roleRef:
+  kind: ClusterRole
+  name: appmesh-controller
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: appmesh-config
+  namespace: appmesh-system
+data:
+  mesh-name: "my-app-mesh"
+  region: "us-east-1"
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appmesh-controller
+  namespace: appmesh-system
+  labels:
+    app: appmesh-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: appmesh-controller
+  template:
+    metadata:
+      labels:
+        app: appmesh-controller
+    spec:
+      serviceAccountName: appmesh-controller
+      containers:
+        - name: controller
+          image: public.ecr.aws/appmesh/aws-appmesh-controller:v1.10.0
+          args:
+            - "--enable-leader-election"
+            - "--metrics-addr=:8080"
+          ports:
+            - containerPort: 8080
+              name: metrics
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: appmesh-inject
+  namespace: appmesh-system
+  labels:
+    app: appmesh-inject
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: appmesh-inject
+  template:
+    metadata:
+      labels:
+        app: appmesh-inject
+    spec:
+      serviceAccountName: appmesh-inject
+      containers:
+        - name: injector
+          image: public.ecr.aws/appmesh/aws-appmesh-inject:v1.10.0
+          args:
+            - "--port=8443"
+          ports:
+            - containerPort: 8443
+              name: webhook
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: appmesh-inject
+  namespace: appmesh-system
+spec:
+  ports:
+    - port: 443
+      targetPort: 8443
+  selector:
+    app: appmesh-inject
