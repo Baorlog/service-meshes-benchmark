@@ -19,21 +19,52 @@ data:
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: grafana-dashboard
+  name: grafana-dashboard-provider
   namespace: monitoring
 data:
-  node-exporter-dashboard.json: |
-    {
-      "id": 1860,
-      "uid": "node-exporter",
-      "title": "Node Exporter Full",
-      "tags": ["prometheus", "node-exporter"],
-      "style": "dark",
-      "timezone": "browser",
-      "editable": true,
-      "version": 1,
-      "panels": []
-    }
+  dashboards.yaml: |
+    apiVersion: 1
+    providers:
+      - name: 'custom-dashboards'
+        orgId: 1
+        folder: ''
+        type: file
+        disableDeletion: false
+        updateIntervalSeconds: 10
+        options:
+          path: /var/lib/grafana/custom-dashboards
+
+
+# ---
+# apiVersion: v1
+# kind: ConfigMap
+# metadata:
+#   name: grafana-dashboard
+#   namespace: monitoring
+# data:
+#   node-exporter-dashboard.json: |
+#     {
+#       "annotations": {
+#         "list": []
+#       },
+#       "title": "Node Exporter Full",
+#       "uid": "node-exporter",
+#       "version": 1,
+#       "schemaVersion": 22,
+#       "panels": [
+#         {
+#           "title": "CPU Usage",
+#           "type": "graph",
+#           "targets": [
+#             {
+#               "expr": "100 - (avg by (instance) (irate(node_cpu_seconds_total{mode='idle'}[5m])) * 100)",
+#               "legendFormat": "{{instance}}",
+#               "refId": "A"
+#             }
+#           ]
+#         }
+#       ]
+#     }
 
 ---
 apiVersion: apps/v1
@@ -60,18 +91,25 @@ spec:
             - name: GF_SECURITY_ADMIN_USER
               value: "admin"
             - name: GF_SECURITY_ADMIN_PASSWORD
-              value: "admin"
+              value: "P3dL9vJXfTgqZ2Nm"
+            - name: GF_SECURITY_DISABLE_INITIAL_ADMIN_PASSWORD_CHANGE
+              value: "true"
             - name: GF_PATHS_PROVISIONING
               value: "/etc/grafana/provisioning"
           volumeMounts:
             - name: grafana-datasource
               mountPath: /etc/grafana/provisioning/datasources
-            - name: grafana-dashboard
+            - name: grafana-dashboard-provider
               mountPath: /etc/grafana/provisioning/dashboards
+            - name: grafana-dashboard
+              mountPath: /var/lib/grafana/custom-dashboards
       volumes:
         - name: grafana-datasource
           configMap:
             name: grafana-datasource
+        - name: grafana-dashboard-provider
+          configMap:
+            name: grafana-dashboard-provider
         - name: grafana-dashboard
           configMap:
             name: grafana-dashboard
