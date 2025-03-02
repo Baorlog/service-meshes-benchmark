@@ -473,7 +473,11 @@ data:
         "from": "2025-02-27T02:48:51.209Z",
         "to": "2025-02-27T06:24:49.602Z"
       },
-      "timepicker": {},
+      "timepicker": {
+        "refresh_intervals": [
+          "5s"
+        ]
+      },
       "timezone": "browser",
       "title": "Monitoring dashboard",
       "uid": "deeagng2mbc3kb",
