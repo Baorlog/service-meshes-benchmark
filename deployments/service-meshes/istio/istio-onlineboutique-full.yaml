@@ -1,0 +1,326 @@
+# 🚀 Gateway for External Traffic
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  name: onlineboutique-gateway
+  namespace: default
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+    - port:
+        number: 80
+        name: http
+        protocol: HTTP
+      hosts:
+        - "*"
+
+---
+# 🚀 VirtualService for External Frontend Access
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: frontend-external
+  namespace: default
+spec:
+  hosts:
+    - "*"
+  gateways:
+    - onlineboutique-gateway
+  http:
+    - route:
+        - destination:
+            host: frontend
+            port:
+              number: 80
+
+---
+# 🚀 VirtualService and DestinationRule for Each Service
+# frontend
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: frontend
+  namespace: default
+spec:
+  hosts:
+    - frontend
+  http:
+    - route:
+        - destination:
+            host: frontend
+            port:
+              number: 80
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: frontend
+  namespace: default
+spec:
+  host: frontend
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN
+
+---
+# adservice
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: adservice
+  namespace: default
+spec:
+  hosts:
+    - adservice
+  http:
+    - route:
+        - destination:
+            host: adservice
+            port:
+              number: 9555
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: adservice
+  namespace: default
+spec:
+  host: adservice
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN
+
+---
+# cartservice
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: cartservice
+  namespace: default
+spec:
+  hosts:
+    - cartservice
+  http:
+    - route:
+        - destination:
+            host: cartservice
+            port:
+              number: 7070
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: cartservice
+  namespace: default
+spec:
+  host: cartservice
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN
+
+---
+# checkoutservice
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: checkoutservice
+  namespace: default
+spec:
+  hosts:
+    - checkoutservice
+  http:
+    - route:
+        - destination:
+            host: checkoutservice
+            port:
+              number: 5050
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: checkoutservice
+  namespace: default
+spec:
+  host: checkoutservice
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN
+
+---
+# currencyservice
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: currencyservice
+  namespace: default
+spec:
+  hosts:
+    - currencyservice
+  http:
+    - route:
+        - destination:
+            host: currencyservice
+            port:
+              number: 7000
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: currencyservice
+  namespace: default
+spec:
+  host: currencyservice
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN
+
+---
+# emailservice
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: emailservice
+  namespace: default
+spec:
+  hosts:
+    - emailservice
+  http:
+    - route:
+        - destination:
+            host: emailservice
+            port:
+              number: 5000
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: emailservice
+  namespace: default
+spec:
+  host: emailservice
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN
+
+---
+# paymentservice
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: paymentservice
+  namespace: default
+spec:
+  hosts:
+    - paymentservice
+  http:
+    - route:
+        - destination:
+            host: paymentservice
+            port:
+              number: 50051
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: paymentservice
+  namespace: default
+spec:
+  host: paymentservice
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN
+
+---
+# productcatalogservice
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: productcatalogservice
+  namespace: default
+spec:
+  hosts:
+    - productcatalogservice
+  http:
+    - route:
+        - destination:
+            host: productcatalogservice
+            port:
+              number: 3550
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: productcatalogservice
+  namespace: default
+spec:
+  host: productcatalogservice
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN
+
+---
+# recommendationservice
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: recommendationservice
+  namespace: default
+spec:
+  hosts:
+    - recommendationservice
+  http:
+    - route:
+        - destination:
+            host: recommendationservice
+            port:
+              number: 8080
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: recommendationservice
+  namespace: default
+spec:
+  host: recommendationservice
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN
+
+---
+# shippingservice
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: shippingservice
+  namespace: default
+spec:
+  hosts:
+    - shippingservice
+  http:
+    - route:
+        - destination:
+            host: shippingservice
+            port:
+              number: 50051
+
+---
+apiVersion: networking.istio.io/v1beta1
+kind: DestinationRule
+metadata:
+  name: shippingservice
+  namespace: default
+spec:
+  host: shippingservice
+  trafficPolicy:
+    loadBalancer:
+      simple: ROUND_ROBIN

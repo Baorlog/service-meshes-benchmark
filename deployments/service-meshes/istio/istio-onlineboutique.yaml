@@ -2,13 +2,13 @@ apiVersion: networking.istio.io/v1beta1
 kind: Gateway
 metadata:
   name: onlineboutique-gateway
-  namespace: default
+  namespace: istio-system
 spec:
   selector:
     istio: ingressgateway # Ensure this matches your Istio Ingress Gateway
   servers:
     - port:
-        number: 80
+        number: 32385
         name: http
         protocol: HTTP
       hosts:
@@ -22,16 +22,21 @@ metadata:
   namespace: default
 spec:
   hosts:
-    - "*"
+    - frontend-external.default.svc.cluster.local
   gateways:
-    - onlineboutique-gateway
+    - istio-system/onlineboutique-gateway  
   http:
     - match:
         - uri:
             prefix: /
+      fault:
+        delay:
+          fixedDelay: 10s  # Introduce a 5-second delay
+          percentage:
+            value: 100  # Apply to 100% of requests
       route:
         - destination:
-            host: frontend
+            host: frontend-external.default.svc.cluster.local
             port:
               number: 80
 
@@ -42,7 +47,7 @@ metadata:
   name: frontend
   namespace: default
 spec:
-  host: frontend
+  host: frontend-external.default.svc.cluster.local
   trafficPolicy:
     loadBalancer:
       simple: ROUND_ROBIN

@@ -1,0 +1,40 @@
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: checkoutservice
+  namespace: default
+spec:
+  hosts:
+    - checkoutservice
+  http:
+    - fault:
+        delay:
+          fixedDelay: 5s   # Introduce a 5-second delay
+          percentage:
+            value: 100     # Apply delay to 100% of requests
+      route:
+        - destination:
+            host: checkoutservice
+            port:
+              number: 5050
+
+# ---
+# apiVersion: networking.istio.io/v1beta1
+# kind: VirtualService
+# metadata:
+#   name: adservice
+#   namespace: default
+# spec:
+#   hosts:
+#     - adservice
+#   http:
+#     - fault:
+#         delay:
+#           fixedDelay: 5s   # Introduce a 5-second delay
+#           percentage:
+#             value: 100     # Apply delay to 100% of requests
+#       route:
+#         - destination:
+#             host: adservice
+#             port:
+#               number: 9555
