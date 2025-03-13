@@ -1,0 +1,12 @@
+apiVersion: linkerd.io/v1alpha2
+kind: ServiceProfile
+metadata:
+  name: checkoutservice.default.svc.cluster.local
+  namespace: default
+spec:
+  routes:
+    - name: "/checkout"
+      condition:
+        method: POST
+      isRetryable: true
+      timeout: 500ms
