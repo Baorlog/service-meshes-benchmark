@@ -368,9 +368,6 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "prometheus"
-      },
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -384,8 +381,8 @@
             "axisPlacement": "auto",
             "barAlignment": 0,
             "barWidthFactor": 0.6,
-            "drawStyle": "line",
-            "fillOpacity": 30,
+            "drawStyle": "points",
+            "fillOpacity": 0,
             "gradientMode": "none",
             "hideFrom": {
               "legend": false,
@@ -393,10 +390,7 @@
               "viz": false
             },
             "insertNulls": false,
-            "lineInterpolation": "smooth",
-            "lineStyle": {
-              "fill": "solid"
-            },
+            "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
             "scaleDistribution": {
@@ -469,8 +463,8 @@
     "list": []
   },
   "time": {
-    "from": "2025-02-27T02:48:51.209Z",
-    "to": "2025-02-27T06:24:49.602Z"
+    "from": "now-2h",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
