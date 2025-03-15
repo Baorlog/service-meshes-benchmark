@@ -1,0 +1,71 @@
+# Mesh
+apiVersion: appmesh.k8s.aws/v1beta2
+kind: Mesh
+metadata:
+  name: online-boutique-mesh
+spec:
+  namespaceSelector:
+    matchLabels:
+      appmesh.k8s.aws/sidecarInjectorWebhook: enabled
+
+# Virtual Node for frontend
+---
+apiVersion: appmesh.k8s.aws/v1beta2
+kind: VirtualNode
+metadata:
+  name: frontend
+  namespace: default
+spec:
+  meshName: online-boutique-mesh
+  listeners:
+    - portMapping:
+        port: 80
+        protocol: http
+  serviceDiscovery:
+    dns:
+      hostname: frontend.default.svc.cluster.local
+
+# Virtual Service for frontend
+---
+apiVersion: appmesh.k8s.aws/v1beta2
+kind: VirtualService
+metadata:
+  name: frontend.default.svc.cluster.local
+  namespace: default
+spec:
+  meshName: online-boutique-mesh
+  provider:
+    virtualNode:
+      virtualNodeName: frontend
+
+# Virtual Router for frontend
+---
+apiVersion: appmesh.k8s.aws/v1beta2
+kind: VirtualRouter
+metadata:
+  name: frontend-router
+  namespace: default
+spec:
+  meshName: online-boutique-mesh
+  listeners:
+    - portMapping:
+        port: 80
+        protocol: http
+
+# Route for frontend
+---
+apiVersion: appmesh.k8s.aws/v1beta2
+kind: GatewayRoute
+metadata:
+  name: frontend-route
+  namespace: default
+spec:
+  meshName: online-boutique-mesh
+  virtualRouterName: frontend-router
+  httpRoute:
+    match:
+      prefix: "/"
+    action:
+      weightedTargets:
+        - virtualNode: frontend
+          weight: 1
