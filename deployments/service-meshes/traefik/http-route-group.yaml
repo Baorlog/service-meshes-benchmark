@@ -1,0 +1,10 @@
+apiVersion: specs.smi-spec.io/v1alpha3
+kind: HTTPRouteGroup
+metadata:
+  name: frontend-routes
+  namespace: default
+spec:
+  matches:
+    - name: all
+      pathRegex: ".*"
+      methods: ["*"]

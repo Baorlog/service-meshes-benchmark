@@ -1,0 +1,375 @@
+# HTTPRouteGroup: allow all HTTP methods and paths
+apiVersion: specs.smi-spec.io/v1alpha3
+kind: HTTPRouteGroup
+metadata:
+  name: allow-all
+  namespace: default
+spec:
+  matches:
+    - name: all
+      pathRegex: ".*"
+      methods: ["*"]
+
+---
+
+# TrafficTarget: loadgenerator -> frontend
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: loadgenerator-to-frontend
+  namespace: default
+spec:
+  destination:
+    kind: ServiceAccount
+    name: frontend
+    namespace: default
+  sources:
+    - kind: ServiceAccount
+      name: default
+      namespace: default
+  rules:
+    - kind: HTTPRouteGroup
+      name: allow-all
+      matches:
+        - all
+
+---
+
+# TrafficTarget: frontend -> all backend services
+
+
+---
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: frontend-to-adservice
+  namespace: default
+spec:
+  destination:
+    kind: ServiceAccount
+    name: adservice
+    namespace: default
+  sources:
+    - kind: ServiceAccount
+      name: frontend
+      namespace: default
+  rules:
+    - kind: HTTPRouteGroup
+      name: allow-all
+      matches:
+        - all
+
+---
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: frontend-to-cartservice
+  namespace: default
+spec:
+  destination:
+    kind: ServiceAccount
+    name: cartservice
+    namespace: default
+  sources:
+    - kind: ServiceAccount
+      name: frontend
+      namespace: default
+  rules:
+    - kind: HTTPRouteGroup
+      name: allow-all
+      matches:
+        - all
+
+---
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: frontend-to-checkoutservice
+  namespace: default
+spec:
+  destination:
+    kind: ServiceAccount
+    name: checkoutservice
+    namespace: default
+  sources:
+    - kind: ServiceAccount
+      name: frontend
+      namespace: default
+  rules:
+    - kind: HTTPRouteGroup
+      name: allow-all
+      matches:
+        - all
+
+---
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: frontend-to-currencyservice
+  namespace: default
+spec:
+  destination:
+    kind: ServiceAccount
+    name: currencyservice
+    namespace: default
+  sources:
+    - kind: ServiceAccount
+      name: frontend
+      namespace: default
+  rules:
+    - kind: HTTPRouteGroup
+      name: allow-all
+      matches:
+        - all
+
+---
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: frontend-to-emailservice
+  namespace: default
+spec:
+  destination:
+    kind: ServiceAccount
+    name: emailservice
+    namespace: default
+  sources:
+    - kind: ServiceAccount
+      name: frontend
+      namespace: default
+  rules:
+    - kind: HTTPRouteGroup
+      name: allow-all
+      matches:
+        - all
+
+---
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: frontend-to-paymentservice
+  namespace: default
+spec:
+  destination:
+    kind: ServiceAccount
+    name: paymentservice
+    namespace: default
+  sources:
+    - kind: ServiceAccount
+      name: frontend
+      namespace: default
+  rules:
+    - kind: HTTPRouteGroup
+      name: allow-all
+      matches:
+        - all
+
+---
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: frontend-to-productcatalogservice
+  namespace: default
+spec:
+  destination:
+    kind: ServiceAccount
+    name: productcatalogservice
+    namespace: default
+  sources:
+    - kind: ServiceAccount
+      name: frontend
+      namespace: default
+  rules:
+    - kind: HTTPRouteGroup
+      name: allow-all
+      matches:
+        - all
+
+---
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: frontend-to-recommendationservice
+  namespace: default
+spec:
+  destination:
+    kind: ServiceAccount
+    name: recommendationservice
+    namespace: default
+  sources:
+    - kind: ServiceAccount
+      name: frontend
+      namespace: default
+  rules:
+    - kind: HTTPRouteGroup
+      name: allow-all
+      matches:
+        - all
+
+---
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: frontend-to-shippingservice
+  namespace: default
+spec:
+  destination:
+    kind: ServiceAccount
+    name: shippingservice
+    namespace: default
+  sources:
+    - kind: ServiceAccount
+      name: frontend
+      namespace: default
+  rules:
+    - kind: HTTPRouteGroup
+      name: allow-all
+      matches:
+        - all
+
+---
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: checkoutservice-to-cartservice
+  namespace: default
+spec:
+  destination:
+    kind: ServiceAccount
+    name: cartservice
+    namespace: default
+  sources:
+    - kind: ServiceAccount
+      name: checkoutservice
+      namespace: default
+  rules:
+    - kind: HTTPRouteGroup
+      name: allow-all
+      matches:
+        - all
+
+---
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: checkoutservice-to-emailservice
+  namespace: default
+spec:
+  destination:
+    kind: ServiceAccount
+    name: emailservice
+    namespace: default
+  sources:
+    - kind: ServiceAccount
+      name: checkoutservice
+      namespace: default
+  rules:
+    - kind: HTTPRouteGroup
+      name: allow-all
+      matches:
+        - all
+
+---
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: checkoutservice-to-paymentservice
+  namespace: default
+spec:
+  destination:
+    kind: ServiceAccount
+    name: paymentservice
+    namespace: default
+  sources:
+    - kind: ServiceAccount
+      name: checkoutservice
+      namespace: default
+  rules:
+    - kind: HTTPRouteGroup
+      name: allow-all
+      matches:
+        - all
+
+---
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: checkoutservice-to-shippingservice
+  namespace: default
+spec:
+  destination:
+    kind: ServiceAccount
+    name: shippingservice
+    namespace: default
+  sources:
+    - kind: ServiceAccount
+      name: checkoutservice
+      namespace: default
+  rules:
+    - kind: HTTPRouteGroup
+      name: allow-all
+      matches:
+        - all
+
+---
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: checkoutservice-to-currencyservice
+  namespace: default
+spec:
+  destination:
+    kind: ServiceAccount
+    name: currencyservice
+    namespace: default
+  sources:
+    - kind: ServiceAccount
+      name: checkoutservice
+      namespace: default
+  rules:
+    - kind: HTTPRouteGroup
+      name: allow-all
+      matches:
+        - all
+
+---
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: recommendationservice-to-productcatalogservice
+  namespace: default
+spec:
+  destination:
+    kind: ServiceAccount
+    name: productcatalogservice
+    namespace: default
+  sources:
+    - kind: ServiceAccount
+      name: recommendationservice
+      namespace: default
+  rules:
+    - kind: HTTPRouteGroup
+      name: allow-all
+      matches:
+        - all
+
+---
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: cartservice-to-redis-cart
+  namespace: default
+spec:
+  destination:
+    kind: ServiceAccount
+    name: redis-cart
+    namespace: default
+  sources:
+    - kind: ServiceAccount
+      name: cartservice
+      namespace: default
+  rules:
+    - kind: HTTPRouteGroup
+      name: allow-all
+      matches:
+        - all

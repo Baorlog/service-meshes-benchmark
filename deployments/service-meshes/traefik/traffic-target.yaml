@@ -1,0 +1,19 @@
+apiVersion: access.smi-spec.io/v1alpha2
+kind: TrafficTarget
+metadata:
+  name: frontend-to-product
+  namespace: default
+spec:
+  destination:
+    kind: ServiceAccount
+    name: productcatalogservice
+    namespace: default
+  rules:
+    - kind: HTTPRouteGroup
+      name: frontend-routes
+      matches:
+        - all
+  sources:
+    - kind: ServiceAccount
+      name: default
+      namespace: default
