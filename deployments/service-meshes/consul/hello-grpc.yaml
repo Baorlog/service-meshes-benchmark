@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: hello-grpc
+  labels:
+    app: hello-grpc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: hello-grpc
+  template:
+    metadata:
+      annotations:
+        consul.hashicorp.com/connect-inject: "true"
+      labels:
+        app: hello-grpc
+    spec:
+      containers:
+        - name: server
+          image: hashicorp/http-echo
+          args:
+            - "-text=grpc-works"
+            - "-listen=:50051"
+          ports:
+            - containerPort: 50051
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: hello-grpc
+spec:
+  selector:
+    app: hello-grpc
+  ports:
+    - port: 50051
+      targetPort: 50051
+      name: grpc
+

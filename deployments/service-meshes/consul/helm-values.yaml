@@ -1,0 +1,44 @@
+# global:
+#   name: consul
+#   datacenter: dc1
+
+#   connect:
+#     enabled: true
+
+# connectInject:
+#   enabled: true
+#   default: false
+
+# controller:
+#   enabled: true
+
+# ui:
+#   enabled: true
+
+# meshGateway:
+#   enabled: false
+
+# acl:
+#   enabled: false
+
+
+connectInject:
+  enabled: true
+  default: false
+
+global:
+  name: consul
+  enableConsulNamespaces: false
+  acls:
+    enabled: false
+
+controller:
+  enabled: true
+
+# 👇 Allow all intentions
+meshGateway:
+  enabled: false
+
+config:
+  enableIntentions: true
+  defaultAllow: true   # 👈 This is the key line

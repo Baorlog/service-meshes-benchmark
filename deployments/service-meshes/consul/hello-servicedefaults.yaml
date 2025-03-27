@@ -1,0 +1,24 @@
+# hello-servicedefaults.yaml
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: hello
+spec:
+  protocol: http
+
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: hello-grpc
+  namespace: default
+spec:
+  protocol: grpc
+---
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: caller-grpc
+  namespace: default
+spec:
+  protocol: grpc
