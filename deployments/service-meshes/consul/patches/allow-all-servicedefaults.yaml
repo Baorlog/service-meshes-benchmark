@@ -1,0 +1,7 @@
+apiVersion: consul.hashicorp.com/v1alpha1
+kind: ServiceDefaults
+metadata:
+  name: global-defaults
+  namespace: default
+spec:
+  protocol: "http"  # can be "grpc" or "tcp" based on your service mesh setup

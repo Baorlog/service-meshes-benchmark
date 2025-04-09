@@ -1,76 +1,89 @@
-apiVersion: consul.hashicorp.com/v1alpha1
-kind: ServiceDefaults
-metadata:
-  name: adservice
-spec:
-  protocol: grpc
----
-apiVersion: consul.hashicorp.com/v1alpha1
-kind: ServiceDefaults
-metadata:
-  name: cartservice
-spec:
-  protocol: grpc
----
-apiVersion: consul.hashicorp.com/v1alpha1
-kind: ServiceDefaults
-metadata:
-  name: checkoutservice
-spec:
-  protocol: http
----
-apiVersion: consul.hashicorp.com/v1alpha1
-kind: ServiceDefaults
-metadata:
-  name: currencyservice
-spec:
-  protocol: grpc
----
-apiVersion: consul.hashicorp.com/v1alpha1
-kind: ServiceDefaults
-metadata:
-  name: emailservice
-spec:
-  protocol: grpc
----
-apiVersion: consul.hashicorp.com/v1alpha1
-kind: ServiceDefaults
-metadata:
-  name: frontend
-spec:
-  protocol: http
----
-apiVersion: consul.hashicorp.com/v1alpha1
-kind: ServiceDefaults
-metadata:
-  name: paymentservice
-spec:
-  protocol: grpc
----
-apiVersion: consul.hashicorp.com/v1alpha1
-kind: ServiceDefaults
-metadata:
-  name: productcatalogservice
-spec:
-  protocol: grpc
----
-apiVersion: consul.hashicorp.com/v1alpha1
-kind: ServiceDefaults
-metadata:
-  name: recommendationservice
-spec:
-  protocol: grpc
----
-apiVersion: consul.hashicorp.com/v1alpha1
-kind: ServiceDefaults
-metadata:
-  name: shippingservice
-spec:
-  protocol: grpc
----
-apiVersion: consul.hashicorp.com/v1alpha1
-kind: ServiceDefaults
-metadata:
-  name: redis-cart
-spec:
-  protocol: tcp
+# apiVersion: consul.hashicorp.com/v1alpha1
+# kind: ServiceDefaults
+# metadata:
+#   name: adservice
+# spec:
+#   protocol: grpc
+# ---
+# apiVersion: consul.hashicorp.com/v1alpha1
+# kind: ServiceDefaults
+# metadata:
+#   name: cartservice
+# spec:
+#   protocol: grpc
+# ---
+# apiVersion: consul.hashicorp.com/v1alpha1
+# kind: ServiceDefaults
+# metadata:
+#   name: checkoutservice
+# spec:
+#   protocol: http
+# ---
+# apiVersion: consul.hashicorp.com/v1alpha1
+# kind: ServiceDefaults
+# metadata:
+#   name: currencyservice
+# spec:
+#   protocol: grpc
+# ---
+# apiVersion: consul.hashicorp.com/v1alpha1
+# kind: ServiceDefaults
+# metadata:
+#   name: emailservice
+# spec:
+#   protocol: grpc
+# ---
+# apiVersion: consul.hashicorp.com/v1alpha1
+# kind: ServiceDefaults
+# metadata:
+#   name: frontend
+# spec:
+#   protocol: http
+# ---
+# apiVersion: consul.hashicorp.com/v1alpha1
+# kind: ServiceDefaults
+# metadata:
+#   name: frontend-external
+#   namespace: default
+# spec:
+#   protocol: http
+#   transparentProxy:
+#     outboundListenerPort: 20000
+#     inboundListenerPort: 15000
+#     # 👇 THIS is the key line
+#     defaultEnabled: true
+# ---
+# apiVersion: consul.hashicorp.com/v1alpha1
+# kind: ServiceDefaults
+# metadata:
+#   name: paymentservice
+# spec:
+#   protocol: grpc
+# ---
+# apiVersion: consul.hashicorp.com/v1alpha1
+# kind: ServiceDefaults
+# metadata:
+#   name: productcatalogservice
+# spec:
+#   protocol: grpc
+# ---
+# apiVersion: consul.hashicorp.com/v1alpha1
+# kind: ServiceDefaults
+# metadata:
+#   name: recommendationservice
+# spec:
+#   protocol: grpc
+# ---
+# apiVersion: consul.hashicorp.com/v1alpha1
+# kind: ServiceDefaults
+# metadata:
+#   name: shippingservice
+# spec:
+#   protocol: grpc
+# ---
+# apiVersion: consul.hashicorp.com/v1alpha1
+# kind: ServiceDefaults
+# metadata:
+#   name: redis-cart
+# spec:
+#   protocol: tcp

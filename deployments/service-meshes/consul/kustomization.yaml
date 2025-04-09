@@ -1,0 +1,21 @@
+resources:
+  - ../../base-app
+  - patches/allow-all-servicedefaults.yaml
+  - patches/allow-all-intentions.yaml
+
+commonAnnotations:
+  consul.hashicorp.com/connect-inject: "true"
+
+patches:
+  - target:
+      kind: Service
+    patch: |
+      - op: add
+        path: /metadata/labels/consul.hashicorp.com~1service
+        value: frontend  # or use transformer to automate multiple
+
+# configurations:
+#   - kustomizeconfig.yaml
+
+patchesStrategicMerge:
+  - patches/ignore-frontend-external-service.yaml

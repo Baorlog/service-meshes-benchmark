@@ -2,6 +2,7 @@ CONSUL_NS=consul
 HELM_RELEASE=consul
 HELM_VALUES=helm-values.yaml
 ALLOW_ALL_INTENTIONS=allow-all-intention.yaml
+KUSTOMIZE_DIR=.
 
 .PHONY: run stop debug
 
@@ -9,30 +10,41 @@ run:
 	@echo "[+] Creating namespace $(CONSUL_NS)"
 	kubectl create ns $(CONSUL_NS) --dry-run=client -o yaml | kubectl apply -f -
 
-	@echo "[+] Installing Consul via Helm (no default inject, no ACL)"
+	@echo "[+] Installing Consul via Helm"
 	helm upgrade --install $(HELM_RELEASE) hashicorp/consul \
 		--namespace $(CONSUL_NS) \
 		-f $(HELM_VALUES)
 
+	@echo "[+] Waiting for connect-injector service to be ready"
+	kubectl wait --timeout=30s --for=condition=available deployment/consul-connect-injector -n $(CONSUL_NS)
+
 	@echo "[+] Applying allow-all intentions"
 	kubectl apply -f $(ALLOW_ALL_INTENTIONS)
 
-	@echo "[+] Rolling out restart for all deployments in default namespace"
+	@echo "[+] Applying kustomize patching"
+	kubectl apply -k $(KUSTOMIZE_DIR)
+
+	@echo "[+] Restarting deployments in default namespace"
 	kubectl rollout restart deployment -n default
 
 stop:
+	@echo "[+] Removing default namespace labels and annotations"
+	kubectl label ns default consul.hashicorp.com/connect-inject- || true
+	kubectl annotate ns default consul.hashicorp.com/connect-inject- || true
+
 	@echo "[+] Deleting Consul Helm release"
 	helm uninstall $(HELM_RELEASE) -n $(CONSUL_NS) || true
 
 	@echo "[+] Deleting namespace $(CONSUL_NS)"
 	kubectl delete ns $(CONSUL_NS) --ignore-not-found
 
-	@echo "[+] Rolling out restart for all deployments in default namespace"
+	@echo "[+] Restarting deployments in default namespace"
 	kubectl rollout restart deployment -n default
 
 debug:
 	@echo "Creating hello-grpc server pod..."
 	kubectl apply -f hello-grpc.yaml
+
 	@echo "[+] Starting debug pod with Ubuntu and grpcurl setup"
 	kubectl run grpcurl-debug \
 		--image=ubuntu \

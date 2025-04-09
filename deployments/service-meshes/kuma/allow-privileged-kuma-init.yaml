@@ -1,0 +1,22 @@
+apiVersion: kuma.io/v1alpha1
+kind: ProxyTemplate
+mesh: default
+metadata:
+  name: allow-privileged-kuma-init
+spec:
+  selectors:
+    - match:
+        kuma.io/service: '*'
+  conf:
+    modifications:
+      - type: PatchJson6902
+        targetRef:
+          kind: Pod
+        value:
+          - op: add
+            path: /spec/securityContext
+            value:
+              runAsUser: 0
+              runAsGroup: 0
+              fsGroup: 0
+              runAsNonRoot: false
