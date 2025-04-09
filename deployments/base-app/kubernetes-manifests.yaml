@@ -28,7 +28,7 @@ spec:
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
-        runAsNonRoot: true
+        runAsNonRoot: false
         runAsUser: 1000
       containers:
       - name: server
@@ -102,7 +102,7 @@ spec:
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
-        runAsNonRoot: true
+        runAsNonRoot: false
         runAsUser: 1000
       containers:
         - name: server
@@ -185,7 +185,7 @@ spec:
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
-        runAsNonRoot: true
+        runAsNonRoot: false
         runAsUser: 1000
       containers:
       - name: server
@@ -263,7 +263,7 @@ spec:
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
-        runAsNonRoot: true
+        runAsNonRoot: false
         runAsUser: 1000
       containers:
         - name: server
@@ -390,7 +390,7 @@ spec:
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
-        runAsNonRoot: true
+        runAsNonRoot: false
         runAsUser: 1000
       containers:
       - name: server
@@ -463,7 +463,7 @@ spec:
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
-        runAsNonRoot: true
+        runAsNonRoot: false
         runAsUser: 1000
       containers:
       - name: server
@@ -536,7 +536,7 @@ spec:
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
-        runAsNonRoot: true
+        runAsNonRoot: false
         runAsUser: 1000
       containers:
       - name: server
@@ -608,7 +608,7 @@ spec:
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
-        runAsNonRoot: true
+        runAsNonRoot: false
         runAsUser: 1000
       containers:
       - name: redis
@@ -683,7 +683,7 @@ spec:
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
-        runAsNonRoot: true
+        runAsNonRoot: false
         runAsUser: 1000
       initContainers:
       - command:
@@ -766,7 +766,7 @@ spec:
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
-        runAsNonRoot: true
+        runAsNonRoot: false
         runAsUser: 1000
       containers:
       - name: server
@@ -839,7 +839,7 @@ spec:
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
-        runAsNonRoot: true
+        runAsNonRoot: false
         runAsUser: 1000
       containers:
       - name: server
@@ -913,7 +913,7 @@ spec:
       securityContext:
         fsGroup: 1000
         runAsGroup: 1000
-        runAsNonRoot: true
+        runAsNonRoot: false
         runAsUser: 1000
       containers:
       - name: server

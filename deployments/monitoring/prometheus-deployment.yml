@@ -21,6 +21,11 @@ data:
         static_configs:
           - targets: ['traefik-mesh-proxy.traefik-mesh.svc.cluster.local:8080']
 
+      - job_name: 'kuma-metrics'
+        metrics_path: /metrics
+        static_configs:
+          - targets: ['kuma-control-plane.kuma-system.svc.cluster.local:5680']
+
 ---
 apiVersion: apps/v1
 kind: Deployment
