@@ -1,0 +1,11 @@
+apiVersion: kuma.io/v1alpha1
+kind: Mesh
+metadata:
+  name: default
+spec:
+  mtls:
+    enabled: true
+    backends:
+      - name: builtin
+        type: builtin
+    defaultBackend: builtin

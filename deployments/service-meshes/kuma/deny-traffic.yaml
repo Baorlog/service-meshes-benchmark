@@ -1,0 +1,13 @@
+apiVersion: kuma.io/v1alpha1
+kind: TrafficPermission
+metadata:
+  name: block-recommendation-to-productcatalog
+mesh: default
+spec:
+  sources:
+    - match:
+        kuma.io/service: recommendationservice_default_svc_8080
+  destinations:
+    - match:
+        kuma.io/service: productcatalogservice_default_svc_3550
+  action: DENY

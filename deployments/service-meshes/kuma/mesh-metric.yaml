@@ -1,0 +1,13 @@
+apiVersion: kuma.io/v1alpha1
+kind: MeshMetric
+metadata:
+  name: kuma-metrics
+  namespace: default
+mesh: default
+spec:
+  enabledBackend: prometheus-1
+  backends:
+    - name: prometheus-1
+      type: prometheus
+      config:
+        port: 5678
