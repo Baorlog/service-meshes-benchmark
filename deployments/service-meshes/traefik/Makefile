@@ -8,8 +8,8 @@ SERVICE_FILE := traefik-mesh-proxy-service.yaml
 
 run: 
 	@echo "🚀 Installing Traefik Mesh in namespace $(NAMESPACE)..."
-	@helm repo add traefik https://helm.traefik.io/traefik
-	@helm repo update
+	# @helm repo add traefik https://helm.traefik.io/traefik
+	# @helm repo update
 	@helm install $(HELM_RELEASE) $(HELM_CHART) -n $(NAMESPACE) --create-namespace || { echo "❌ Helm install failed"; exit 1; }
 	@$(MAKE) wait-for-pods
 	@echo "✅ Traefik Mesh installed successfully!"

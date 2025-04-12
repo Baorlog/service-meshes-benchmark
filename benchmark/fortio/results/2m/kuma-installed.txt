@@ -1,0 +1,97 @@
+superuna@BaoLong-ElementaryOS:~/msc/service-meshes-benchmark/deployments/service-meshes/kuma$ kubectl exec -it fortio-client -- /usr/bin/fortio load -c 8 -qps 100 -t 2m http://frontend.default.svc.cluster.local:80
+04:02:53.611 r1 [INF] scli.go:122> Starting, command="Φορτίο", version="1.69.1 h1:9inX4sswg8UlN5v7clL2VM/fuDtuzhf9+X3LlbFp0cE= go1.23.8 amd64 linux", go-max-procs=8
+Fortio 1.69.1 running at 100 queries per second, 8->8 procs, for 2m0s: http://frontend.default.svc.cluster.local:80
+04:02:53.611 r1 [INF] httprunner.go:121> Starting http test, run=0, url="http://frontend.default.svc.cluster.local:80", threads=8, qps="100.0", warmup="parallel", conn-reuse=""
+Starting at 100 qps with 8 thread(s) [gomax 8] for 2m0s : 1500 calls each (total 12000)
+04:04:53.828 r135 [WRN] periodic.go:782> T005 warning only did 1064 out of 1500 calls before reaching 2m0s
+04:04:53.828 r135 [INF] periodic.go:851> T005 ended after 2m0.048561565s : 1064 calls. qps=8.863079958054307
+04:04:53.828 r137 [WRN] periodic.go:782> T007 warning only did 1059 out of 1500 calls before reaching 2m0s
+04:04:53.828 r137 [INF] periodic.go:851> T007 ended after 2m0.048581048s : 1059 calls. qps=8.821428714568242
+04:04:53.829 r131 [WRN] periodic.go:782> T001 warning only did 1064 out of 1500 calls before reaching 2m0s
+04:04:53.829 r131 [INF] periodic.go:851> T001 ended after 2m0.049744569s : 1064 calls. qps=8.862992618767743
+04:04:53.829 r136 [WRN] periodic.go:782> T006 warning only did 1072 out of 1500 calls before reaching 2m0s
+04:04:53.829 r136 [INF] periodic.go:851> T006 ended after 2m0.049809303s : 1072 calls. qps=8.929626845922954
+04:04:53.829 r133 [WRN] periodic.go:782> T003 warning only did 1055 out of 1500 calls before reaching 2m0s
+04:04:53.829 r133 [INF] periodic.go:851> T003 ended after 2m0.049940128s : 1055 calls. qps=8.78800938072218
+04:04:53.830 r132 [WRN] periodic.go:782> T002 warning only did 1064 out of 1500 calls before reaching 2m0s
+04:04:53.830 r132 [INF] periodic.go:851> T002 ended after 2m0.049985198s : 1064 calls. qps=8.862974853725563
+04:04:53.830 r134 [WRN] periodic.go:782> T004 warning only did 1065 out of 1500 calls before reaching 2m0s
+04:04:53.830 r134 [INF] periodic.go:851> T004 ended after 2m0.050027073s : 1065 calls. qps=8.871301622884225
+04:04:53.831 r130 [WRN] periodic.go:782> T000 warning only did 1066 out of 1500 calls before reaching 2m0s
+04:04:53.831 r130 [INF] periodic.go:851> T000 ended after 2m0.051004425s : 1066 calls. qps=8.87955919324246
+Ended after 2m0.05101838s : 8509 calls. qps=70.878
+04:04:53.831 r1 [INF] periodic.go:581> Run ended, run=0, elapsed=120051018380, calls=8509, qps=70.87819924247776
+Aggregated Sleep Time : count 8509 avg -18.958574 +/- 9.518 min -35.64535112 max -0.121780908 sum -161318.507
+# range, mid point, percentile, count
+>= -35.6454 <= -0.121781 , -17.8836 , 100.00, 8509
+# target 50% -17.8857
+WARNING 100.00% of sleep were falling behind
+Aggregated Function Time : count 8509 avg 0.11286224 +/- 0.08742 min 0.008079235 max 1.099474699 sum 960.344778
+# range, mid point, percentile, count
+>= 0.00807924 <= 0.009 , 0.00853962 , 0.01, 1
+> 0.009 <= 0.01 , 0.0095 , 0.04, 2
+> 0.01 <= 0.011 , 0.0105 , 0.09, 5
+> 0.011 <= 0.012 , 0.0115 , 0.25, 13
+> 0.012 <= 0.014 , 0.013 , 2.03, 152
+> 0.014 <= 0.016 , 0.015 , 7.56, 470
+> 0.016 <= 0.018 , 0.017 , 9.31, 149
+> 0.018 <= 0.02 , 0.019 , 9.98, 57
+> 0.02 <= 0.025 , 0.0225 , 10.10, 10
+> 0.025 <= 0.03 , 0.0275 , 10.13, 3
+> 0.03 <= 0.035 , 0.0325 , 10.15, 2
+> 0.035 <= 0.04 , 0.0375 , 10.21, 5
+> 0.04 <= 0.045 , 0.0425 , 11.06, 72
+> 0.045 <= 0.05 , 0.0475 , 12.59, 130
+> 0.05 <= 0.06 , 0.055 , 17.36, 406
+> 0.06 <= 0.07 , 0.065 , 19.80, 208
+> 0.07 <= 0.08 , 0.075 , 19.94, 12
+> 0.08 <= 0.09 , 0.085 , 23.20, 277
+> 0.09 <= 0.1 , 0.095 , 59.13, 3057
+> 0.1 <= 0.12 , 0.11 , 77.79, 1588
+> 0.12 <= 0.14 , 0.13 , 78.81, 87
+> 0.14 <= 0.16 , 0.15 , 82.79, 339
+> 0.16 <= 0.18 , 0.17 , 83.46, 57
+> 0.18 <= 0.2 , 0.19 , 93.67, 868
+> 0.2 <= 0.25 , 0.225 , 96.30, 224
+> 0.25 <= 0.3 , 0.275 , 98.06, 150
+> 0.3 <= 0.35 , 0.325 , 98.60, 46
+> 0.35 <= 0.4 , 0.375 , 99.13, 45
+> 0.4 <= 0.45 , 0.425 , 99.15, 2
+> 0.45 <= 0.5 , 0.475 , 99.21, 5
+> 0.5 <= 0.6 , 0.55 , 99.33, 10
+> 0.6 <= 0.7 , 0.65 , 99.53, 17
+> 0.7 <= 0.8 , 0.75 , 99.68, 13
+> 0.8 <= 0.9 , 0.85 , 99.73, 4
+> 0.9 <= 1 , 0.95 , 99.82, 8
+> 1 <= 1.09947 , 1.04974 , 100.00, 15
+# target 50% 0.0974599
+# target 75% 0.117012
+# target 90% 0.192813
+# target 99% 0.387678
+# target 99.9% 1.04305
+Error cases : no data
+# Socket and IP used for each connection:
+[0]   1 socket used, resolved to 10.111.188.81:80, connection timing : count 1 avg 0.00018915 +/- 0 min 0.00018915 max 0.00018915 sum 0.00018915
+[1]   1 socket used, resolved to 10.111.188.81:80, connection timing : count 1 avg 0.0001413 +/- 0 min 0.0001413 max 0.0001413 sum 0.0001413
+[2]   1 socket used, resolved to 10.111.188.81:80, connection timing : count 1 avg 0.000223865 +/- 0 min 0.000223865 max 0.000223865 sum 0.000223865
+[3]   1 socket used, resolved to 10.111.188.81:80, connection timing : count 1 avg 8.6712e-05 +/- 0 min 8.6712e-05 max 8.6712e-05 sum 8.6712e-05
+[4]   1 socket used, resolved to 10.111.188.81:80, connection timing : count 1 avg 0.000172702 +/- 0 min 0.000172702 max 0.000172702 sum 0.000172702
+[5]   1 socket used, resolved to 10.111.188.81:80, connection timing : count 1 avg 0.00017584 +/- 0 min 0.00017584 max 0.00017584 sum 0.00017584
+[6]   1 socket used, resolved to 10.111.188.81:80, connection timing : count 1 avg 0.000114824 +/- 0 min 0.000114824 max 0.000114824 sum 0.000114824
+[7]   1 socket used, resolved to 10.111.188.81:80, connection timing : count 1 avg 0.000258119 +/- 0 min 0.000258119 max 0.000258119 sum 0.000258119
+Connection time histogram (s) : count 8 avg 0.000170314 +/- 5.23e-05 min 8.6712e-05 max 0.000258119 sum 0.001362512
+# range, mid point, percentile, count
+>= 8.6712e-05 <= 0.000258119 , 0.000172416 , 100.00, 8
+# target 50% 0.000160172
+# target 75% 0.000209146
+# target 90% 0.00023853
+# target 99% 0.00025616
+# target 99.9% 0.000257923
+Sockets used: 8 (for perfect keepalive, would be 8)
+Uniform: false, Jitter: false, Catchup allowed: true
+IP addresses distribution:
+10.111.188.81:80: 8
+Code 200 : 8509 (100.0 %)
+Response Header Sizes : count 8509 avg 206 +/- 0 min 206 max 206 sum 1752854
+Response Body/Total Sizes : count 8509 avg 10751.992 +/- 0.347 min 10731 max 10752 sum 91488703
+All done 8509 calls (plus 8 warmup) 112.862 ms avg, 70.9 qps

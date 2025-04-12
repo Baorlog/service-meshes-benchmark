@@ -6,8 +6,8 @@ HELM_RELEASE = kuma
 
 run:
 	@echo "🌀 Adding Kuma Helm repo..."
-	helm repo add kuma https://kumahq.github.io/charts || true
-	helm repo update
+	# helm repo add kuma https://kumahq.github.io/charts || true
+	# helm repo update
 
 	@echo "🚀 Installing Kuma with Helm..."
 	helm install --create-namespace --namespace $(KUMA_NAMESPACE) $(HELM_RELEASE) kuma/kuma

@@ -16,7 +16,7 @@ run:
 		-f $(HELM_VALUES)
 
 	@echo "[+] Waiting for connect-injector service to be ready"
-	kubectl wait --timeout=30s --for=condition=available deployment/consul-connect-injector -n $(CONSUL_NS)
+	kubectl rollout status deployment --timeout=180s -n $(CONSUL_NS)
 
 	@echo "[+] Applying allow-all intentions"
 	kubectl apply -f $(ALLOW_ALL_INTENTIONS)

@@ -37,7 +37,7 @@ metadata:
 data:
   prometheus.yml: |
     global:
-      scrape_interval: 15s
+      scrape_interval: 5s
     scrape_configs:
       - job_name: 'kubernetes'
         static_configs:

@@ -10,7 +10,7 @@ run:
 	linkerd install --crds | kubectl apply -f -
 
 	@echo "🔄 Installing Linkerd Control Plane..."
-	linkerd install | kubectl apply -f -
+	linkerd install --set proxyInit.runAsRoot=true | kubectl apply -f -
 
 	@echo "✅ Checking Linkerd Health..."
 	linkerd check
@@ -21,8 +21,8 @@ run:
 	@echo "🔄 Restarting Deployments for Proxy Injection..."
 	kubectl rollout restart deployment -n $(NAMESPACE)
 
-	@echo "🚀 Installing Linkerd Viz Dashboard..."
-	linkerd viz install | kubectl apply -f -
+	# @echo "🚀 Installing Linkerd Viz Dashboard..."
+	# linkerd viz install | kubectl apply -f -
 
 	@echo "✅ Linkerd Viz is ready. Run 'linkerd viz dashboard' to access."
 
