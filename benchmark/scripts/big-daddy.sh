@@ -41,7 +41,7 @@ cd ./benchmark/fortio
 
 echo "👨‍💻 Running K6 user flow tests..."
 cd ../k6
-./run-tests-short.sh "$MESH_NAME" "$PWD"
+./run-tests.sh "$MESH_NAME" "$PWD"
 
 # === 4. Wait until results are complete (placeholder logic) ===
 # Optional: check if result files exist

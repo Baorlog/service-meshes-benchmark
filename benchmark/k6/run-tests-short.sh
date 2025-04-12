@@ -9,7 +9,6 @@ if [ -z "$MESH_NAME" ]; then
   MESH_NAME="baseline"
 fi
 
-
 FRONTEND_IP=$(minikube ip)
 FRONTEND_PORT=$(kubectl get svc frontend-external -o=jsonpath='{.spec.ports[0].nodePort}')
 FRONTEND_URL="http://${FRONTEND_IP}:${FRONTEND_PORT}"
