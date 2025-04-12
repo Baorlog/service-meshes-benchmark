@@ -16,8 +16,8 @@ echo "🚀 Running benchmarking for HTTP"
 OUTPUT_DIR="./results/$MESH_NAME/http/"
 mkdir -p "$OUTPUT_DIR"
 
-# Thread: 10, qps: 100, time: 2m
-THREAD=10
+# Thread: 4, qps: 100, time: 2m
+THREAD=4
 QPS=100
 TIME=2m
 echo "Thread: $THREAD, qps: $QPS, time: $TIME"
@@ -35,8 +35,8 @@ echo "⏸️ Waiting 1 minute..."
 sleep 60
 
 
-# Thread: 50, qps: 100, time: 10m
-THREAD=50
+# Thread: 8, qps: 100, time: 10m
+THREAD=8
 QPS=100
 TIME=10m
 echo "Thread: $THREAD, qps: $QPS, time: $TIME"
@@ -54,8 +54,8 @@ echo "⏸️ Waiting 1 minute..."
 sleep 60
 
 
-# Thread: 200, qps: 200, time: 10m
-THREAD=200
+# Thread: 16, qps: 200, time: 10m
+THREAD=16
 QPS=200
 TIME=10m
 echo "Thread: $THREAD, qps: $QPS, time: $TIME"
@@ -77,8 +77,8 @@ echo "🚀 Running benchmarking for gRPC"
 mkdir -p ./results/$MESH_NAME/grpc/
 mkdir -p "$OUTPUT_DIR"
 
-# Thread: 10, qps: 100, time: 2m
-THREAD=10
+# Thread: 4, qps: 100, time: 2m
+THREAD=4
 QPS=100
 TIME=2m
 echo "Thread: $THREAD, qps: $QPS, time: $TIME"
@@ -96,8 +96,8 @@ echo "⏸️ Waiting 1 minute..."
 sleep 60
 
 
-# Thread: 50, qps: 100, time: 10m
-THREAD=50
+# Thread: 8, qps: 100, time: 10m
+THREAD=8
 QPS=100
 TIME=10m
 echo "Thread: $THREAD, qps: $QPS, time: $TIME"
@@ -115,8 +115,8 @@ echo "⏸️ Waiting 1 minute..."
 sleep 60
 
 
-# Thread: 200, qps: 200, time: 10m
-THREAD=200
+# Thread: 16, qps: 200, time: 10m
+THREAD=16
 QPS=200
 TIME=10m
 echo "Thread: $THREAD, qps: $QPS, time: $TIME"
