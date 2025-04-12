@@ -54,4 +54,16 @@ END_TIME=$(date +%s)
 cd ../metrics
 ./extract-prometheus-metrics.sh "$START_TIME" "$END_TIME" "$MESH_NAME" "$PWD"
 
+if [ -n "$MESH_NAME" ]; then
+  # === 6. Reset everything
+  cd ../../deployments/service-meshes/$MESH_NAME
+  make stop
+
+  # Wait for readiness
+  echo "⏳ Waiting for deployments to be ready..."
+  kubectl rollout status deployment -n default --timeout=180s
+
+  cd ../../../
+fi
+
 echo "✅ Benchmarking complete for $MESH_NAME."
