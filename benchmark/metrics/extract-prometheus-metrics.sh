@@ -1,8 +1,14 @@
 #!/bin/bash
 
+cd ./benchmark/metrics
+
 START="$1"
 END="$2"
 MESH_NAME="$3"
+DIR="$4"
+
+cd $DIR
+
 
 PROM_IP=$(minikube ip)
 PROM_PORT=$(kubectl get svc prometheus -n monitoring -o=jsonpath='{.spec.ports[0].nodePort}')
@@ -16,7 +22,8 @@ query_and_save() {
   local query="$1"
   local type="$2"   # node or pod
   local name="$3"   # e.g., node_cpu
-  local out_dir="./$type"
+  local out_dir="./$type/${MESH_NAME}"
+  mkdir -p $out_dir
   local outfile="${out_dir}/${name}_${MESH_NAME}.json"
 
   echo "📥 Fetching $type metric: $name"

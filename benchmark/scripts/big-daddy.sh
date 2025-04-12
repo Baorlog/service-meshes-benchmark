@@ -20,9 +20,15 @@ if [ -n "$MESH_NAME" ]; then
   echo "🚀 Deploying $MESH_NAME..."
   cd deployments/service-meshes/$MESH_NAME
   make run
+
+  # Wait for readiness
+  echo "⏳ Waiting for deployments to be ready..."
+  kubectl rollout status deployment -n default --timeout=180s
+
   cd ../../../
 else
-  echo "ℹ️ No mesh selected, skipping mesh deployment. Benchmarking baseline case"
+  MESH_NAME="baseline"
+  echo "ℹ️ No mesh selected, skipping mesh deployment. Benchmarking $MESH_NAME case"
   START_TIME=$(date +%s)
   echo "📌 Start time recorded: $START_TIME"
 fi
@@ -30,11 +36,12 @@ fi
 # === 3. Run Fortio and K6 benchmarks ===
 echo "🏋️ Running Fortio HTTP + gRPC tests..."
 # You will define these scripts later, so we assume their names for now
-./benchmark/fortio/run-fortio-http.sh "$MESH_NAME"
-./benchmark/fortio/run-fortio-grpc.sh "$MESH_NAME"
+cd ./benchmark/fortio
+./run-fortio.sh "$MESH_NAME" "$PWD"
 
 echo "👨‍💻 Running K6 user flow tests..."
-./benchmark/k6/run-k6-tests.sh "$MESH_NAME"
+cd ../k6
+./run-tests-short.sh "$MESH_NAME" "$PWD"
 
 # === 4. Wait until results are complete (placeholder logic) ===
 # Optional: check if result files exist
@@ -44,6 +51,7 @@ sleep 30  # TODO: Replace with actual result-waiting logic if needed
 # === 5. Extract Prometheus metrics ===
 echo "📊 Extracting Prometheus metrics..."
 END_TIME=$(date +%s)
-/bin/bash ./benchmark/scripts/extract-prometheus-metrics.sh "$START_TIME" "$END_TIME" "$MESH_NAME"
+cd ../metrics
+./extract-prometheus-metrics.sh "$START_TIME" "$END_TIME" "$MESH_NAME" "$PWD"
 
 echo "✅ Benchmarking complete for $MESH_NAME."
