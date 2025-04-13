@@ -1,0 +1,88 @@
+{
+  "RunType": "GRPC Health for ''",
+  "Labels": "productcatalogservice.default.svc.cluster.local:3550 , fortio-client",
+  "StartTime": "2025-04-13T03:25:40.97034452Z",
+  "RequestedQPS": "100",
+  "RequestedDuration": "2m0s",
+  "ActualQPS": 99.99837605220583,
+  "ActualDuration": 120001948769,
+  "NumThreads": 4,
+  "Version": "1.69.1",
+  "DurationHistogram": {
+    "Count": 12000,
+    "Min": 0.000226805,
+    "Max": 0.002801682,
+    "Sum": 12.507067921,
+    "Avg": 0.0010422556600833334,
+    "StdDev": 0.0004095625918550117,
+    "Data": [
+      {
+        "Start": 0.000226805,
+        "End": 0.001,
+        "Percent": 41.9,
+        "Count": 5028
+      },
+      {
+        "Start": 0.001,
+        "End": 0.002,
+        "Percent": 99.33333333333333,
+        "Count": 6892
+      },
+      {
+        "Start": 0.002,
+        "End": 0.002801682,
+        "Percent": 100,
+        "Count": 80
+      }
+    ],
+    "Percentiles": [
+      {
+        "Percentile": 50,
+        "Value": 0.0011410330818340106
+      },
+      {
+        "Percentile": 75,
+        "Value": 0.001576320371445154
+      },
+      {
+        "Percentile": 90,
+        "Value": 0.00183749274521184
+      },
+      {
+        "Percentile": 99,
+        "Value": 0.0019941961694718516
+      },
+      {
+        "Percentile": 99.9,
+        "Value": 0.0026814297000000075
+      }
+    ]
+  },
+  "ErrorsDurationHistogram": {
+    "Count": 0,
+    "Min": 0,
+    "Max": 0,
+    "Sum": 0,
+    "Avg": 0,
+    "StdDev": 0,
+    "Data": null
+  },
+  "Exactly": 0,
+  "Jitter": false,
+  "Uniform": false,
+  "NoCatchUp": false,
+  "RunID": 0,
+  "AccessLoggerInfo": "",
+  "ID": "2025-04-13-032540_productcatalogservice_default_svc_cluster_local_3550_fortio_client",
+  "RetCodes": {
+    "SERVING": 12000
+  },
+  "Destination": "productcatalogservice.default.svc.cluster.local:3550",
+  "Streams": 1,
+  "Ping": false,
+  "Metadata": {
+    "user-agent": [
+      "fortio.org/fortio-1.69.1"
+    ]
+  }
+}
