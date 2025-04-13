@@ -63,7 +63,9 @@ if [ -n "$MESH_NAME" ]; then
   echo "⏳ Waiting for deployments to be ready..."
   kubectl rollout status deployment -n default --timeout=180s
 
-  cd ../../../
+  cd ../../../benchmark/scripts
+else
+  cd ../scripts
 fi
 
 echo "✅ Benchmarking complete for $MESH_NAME."
