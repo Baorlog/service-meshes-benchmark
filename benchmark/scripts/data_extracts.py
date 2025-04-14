@@ -38,7 +38,7 @@ def plot_latency_chart(protocol, case_id):
     plt.legend()
     plt.tight_layout()
     plt.savefig(OUTPUT_PNG)
-    print(f"✅ Chart saved to {OUTPUT_PNG}")
+    print(f"Chart saved to {OUTPUT_PNG}")
 
 
 def extract_latency(protocol, case_id):
@@ -62,7 +62,7 @@ def extract_latency(protocol, case_id):
         file_name = f"{mesh}-{protocol}-{case_id}.json"
         file_path = os.path.join(mesh_dir, file_name)
         if not os.path.isfile(file_path):
-            print(f"⚠️ Missing: {file_path}")
+            print(f"Missing: {file_path}")
             continue
 
         with open(file_path, "r") as f:
@@ -93,12 +93,12 @@ def extract_latency(protocol, case_id):
         writer.writerow(["mesh"] + metrics)
         writer.writerows(rows)
 
-    print(f"✅ CSV saved to {OUTPUT_CSV}")
+    print(f"CSV saved to {OUTPUT_CSV}")
 
     plot_latency_chart(protocol=protocol, case_id=case_id)
 
 
 if __name__ == "__main__":
     for protocol in ["http", "grpc"]:
-        for case_id in ["c4q100t2m", "c8q100t10m", "c16q200t10m"]:
+        for case_id in ["c4q100t2m", "c8q100t10m", "c16q200t10m", "c16q400t10m", "c32q400t10m"]:
             extract_latency(protocol=protocol, case_id=case_id)

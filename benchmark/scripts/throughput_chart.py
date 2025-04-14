@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 # === CONSTANTS ===
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
 RESULTS_ROOT = os.path.abspath(os.path.join(ROOT_DIR, "..", "fortio", "results"))
-CASES = ["c4q100t2m", "c8q100t10m", "c16q200t10m"]
+CASES = ["c4q100t2m", "c8q100t10m", "c16q200t10m", "c16q400t10m", "c32q400t10m"]
 OUTPUT_DIR = os.path.join(ROOT_DIR, "data")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
@@ -31,7 +31,7 @@ def extract_throughput(protocol):
         for case in CASES:
             json_path = os.path.join(mesh_case_dir, f"{mesh}-{protocol}-{case}.json")
             if not os.path.isfile(json_path):
-                print(f"⚠️ Missing file: {json_path}")
+                print(f"Missing file: {json_path}")
                 qps_values.append(0)
                 continue
 
@@ -62,7 +62,7 @@ def plot_throughput_chart(protocol):
 
     output_path = os.path.join(OUTPUT_DIR, f"throughput_{protocol}.png")
     plt.savefig(output_path)
-    print(f"✅ Saved chart to {output_path}")
+    print(f"Saved chart to {output_path}")
 
 
 # === RUN ===

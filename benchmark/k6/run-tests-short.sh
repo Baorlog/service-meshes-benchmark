@@ -13,11 +13,11 @@ FRONTEND_IP=$(minikube ip)
 FRONTEND_PORT=$(kubectl get svc frontend-external -o=jsonpath='{.spec.ports[0].nodePort}')
 FRONTEND_URL="http://${FRONTEND_IP}:${FRONTEND_PORT}"
 
-echo "🌐 Using frontend URL: $FRONTEND_URL"
+echo "Using frontend URL: $FRONTEND_URL"
 
 mkdir -p "results/$MESH_NAME"
 
-echo "🚀 Running Case 1: Constant 25 VUs for 10 min"
+echo "Running Case 1: Constant 25 VUs for 10 min"
 k6 run \
   --tag test_case=case-1 \
   --duration 1m \
@@ -26,10 +26,10 @@ k6 run \
   --env FRONTEND_URL=$FRONTEND_URL \
   test-script.js
 
-echo "⏸️ Waiting 2 minutes..."
+echo "Waiting 2 minutes..."
 sleep 30
 
-echo "🚀 Running Case 2: Constant 50 VUs for 10 min"
+echo "Running Case 2: Constant 50 VUs for 10 min"
 k6 run \
   --tag test_case=case-2 \
   --duration 1m \
@@ -38,10 +38,10 @@ k6 run \
   --env FRONTEND_URL=$FRONTEND_URL \
   test-script.js
 
-echo "⏸️ Waiting 2 minutes..."
+echo "Waiting 2 minutes..."
 sleep 30
 
-echo "🚀 Running Case 3: Ramp up to 200 users and down"
+echo "Running Case 3: Ramp up to 200 users and down"
 k6 run \
   -u 0 \
   -s 2m:200 \

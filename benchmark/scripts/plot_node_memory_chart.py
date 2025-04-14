@@ -12,7 +12,7 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 def load_memory_metrics(mesh):
     file_path = os.path.join(METRICS_DIR, mesh, f"node_memory_{mesh}.json")
     if not os.path.isfile(file_path):
-        print(f"⚠️ Missing: {file_path}")
+        print(f"Missing: {file_path}")
         return [], []
 
     with open(file_path, "r") as f:
@@ -48,10 +48,10 @@ def plot_node_memory_chart():
             plt.grid(True)
             plt.legend()
             plt.tight_layout()
-            out_path = os.path.join(OUTPUT_DIR, f"node_memory_{mesh}.png")
+            out_path = os.path.join(OUTPUT_DIR, f"stress_node_memory_{mesh}.png")
             plt.savefig(out_path)
             plt.close()
-            print(f"✅ Saved individual chart: {out_path}")
+            print(f"Saved individual chart: {out_path}")
 
     # Save all-mesh comparison chart
     if plotted_meshes:
@@ -61,9 +61,9 @@ def plot_node_memory_chart():
         plt.grid(True)
         plt.legend()
         plt.tight_layout()
-        out_path = os.path.join(OUTPUT_DIR, "node_memory_chart.png")
+        out_path = os.path.join(OUTPUT_DIR, "stress_node_memory_chart.png")
         plt.savefig(out_path)
-        print(f"✅ Saved comparison chart: {out_path}")
+        print(f"Saved comparison chart: {out_path}")
 
 
 # === MAIN ===

@@ -13,7 +13,7 @@ os.makedirs(OUTPUT_DIR, exist_ok=True)
 def load_pod_memory_metrics(mesh):
     file_path = os.path.join(METRICS_DIR, mesh, f"pod_memory_{mesh}.json")
     if not os.path.isfile(file_path):
-        print(f"⚠️ Missing: {file_path}")
+        print(f"Missing: {file_path}")
         return {}
 
     with open(file_path, "r") as f:
@@ -62,10 +62,10 @@ def plot_pod_memory_chart():
         )
 
         fig.tight_layout(rect=[0, 0, 0.85, 1])
-        out_path = os.path.join(OUTPUT_DIR, f"pod_memory_{mesh}.png")
+        out_path = os.path.join(OUTPUT_DIR, f"stress_pod_memory_{mesh}.png")
         fig.savefig(out_path)
         plt.close(fig)
-        print(f"✅ Saved pod-level chart: {out_path}")
+        print(f"Saved pod-level chart: {out_path}")
 
         # Aggregate total per timestamp
         combined = defaultdict(float)
@@ -89,9 +89,9 @@ def plot_pod_memory_chart():
         plt.grid(True)
         plt.legend()
         plt.tight_layout()
-        out_path = os.path.join(OUTPUT_DIR, "pod_memory_total_chart.png")
+        out_path = os.path.join(OUTPUT_DIR, "stress_pod_memory_total_chart.png")
         plt.savefig(out_path)
-        print(f"✅ Saved total memory comparison chart: {out_path}")
+        print(f"Saved total memory comparison chart: {out_path}")
 
 
 # === MAIN ===

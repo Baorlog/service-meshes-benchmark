@@ -26,7 +26,7 @@ query_and_save() {
   mkdir -p $out_dir
   local outfile="${out_dir}/${name}_${MESH_NAME}.json"
 
-  echo "📥 Fetching $type metric: $name"
+  echo "Fetching $type metric: $name"
   curl -sG "${PROM_URL}/api/v1/query_range" \
     --data-urlencode "query=$query" \
     --data-urlencode "start=${START}" \
@@ -43,4 +43,4 @@ query_and_save "node_memory_Active_bytes / node_memory_MemTotal_bytes * 100" nod
 query_and_save "sum(rate(container_cpu_usage_seconds_total{namespace=\"default\"}[1m])) by (pod)" pod pod_cpu
 query_and_save "sum(container_memory_usage_bytes{namespace=\"default\"}) by (pod)" pod pod_memory
 
-echo "✅ All metrics saved to ./node/ and ./pod/"
+echo "All metrics saved to ./node/ and ./pod/"

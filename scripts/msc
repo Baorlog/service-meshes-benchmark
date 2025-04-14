@@ -1,0 +1,26 @@
+#!/bin/bash
+
+code /home/superuna/msc &> /dev/null &
+
+# Khởi động minikube
+minikube start
+
+echo "Waiting 30s for starting..."
+sleep 30
+echo "Waiting complete, opening Grafana"
+
+# Lấy địa chỉ IP của cluster minikube
+IP=$(minikube ip)
+
+# Lấy cổng của service grafana từ namespace monitoring
+# Lệnh dưới đây sử dụng jsonpath để trích xuất nodePort của service đầu tiên,
+# hãy kiểm tra lại nếu service của bạn có cấu trúc khác.
+PORT=$(kubectl get svc grafana -n monitoring -o jsonpath='{.spec.ports[0].nodePort}')
+
+# Kiểm tra xem IP và PORT đã được lấy thành công chưa
+echo "Đang mở trang: http://$IP:$PORT"
+
+# Mở trình duyệt Google Chrome ở trang Grafana
+google-chrome "http://$IP:$PORT" --profile-directory="Profile 7" &> /dev/null &
+
+k9s --logoless

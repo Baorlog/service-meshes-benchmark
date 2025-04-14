@@ -12,7 +12,7 @@ fi
 FRONTEND_ENDPOINT="http://frontend.default.svc.cluster.local:80"
 PRODUCT_ENDPOINT="productcatalogservice.default.svc.cluster.local:3550"
 
-echo "🚀 Running benchmarking for HTTP"
+echo "Running benchmarking for HTTP"
 OUTPUT_DIR="./results/$MESH_NAME/http/"
 mkdir -p "$OUTPUT_DIR"
 
@@ -30,8 +30,8 @@ kubectl exec -it fortio-client -- /usr/local/bin/fortio load -c "$THREAD" -qps "
 # Copy results from pod to local
 kubectl cp "default/fortio-client:/tmp/$FILE_NAME" "$OUTPUT_DIR$FILE_NAME"
 
-echo "✅ Benchmark complete. Output saved to $OUTPUT_DIR$FILE_NAME"
-echo "⏸️ Waiting 1 minute..."
+echo "Benchmark complete. Output saved to $OUTPUT_DIR$FILE_NAME"
+echo "Waiting 1 minute..."
 sleep 60
 
 
@@ -49,8 +49,8 @@ kubectl exec -it fortio-client -- /usr/local/bin/fortio load -c "$THREAD" -qps "
 # Copy results from pod to local
 kubectl cp "default/fortio-client:/tmp/$FILE_NAME" "$OUTPUT_DIR$FILE_NAME"
 
-echo "✅ Benchmark complete. Output saved to $OUTPUT_DIR$FILE_NAME"
-echo "⏸️ Waiting 1 minute..."
+echo "Benchmark complete. Output saved to $OUTPUT_DIR$FILE_NAME"
+echo "Waiting 1 minute..."
 sleep 60
 
 
@@ -68,12 +68,50 @@ kubectl exec -it fortio-client -- /usr/local/bin/fortio load -c "$THREAD" -qps "
 # Copy results from pod to local
 kubectl cp "default/fortio-client:/tmp/$FILE_NAME" "$OUTPUT_DIR$FILE_NAME"
 
-echo "✅ Benchmark complete. Output saved to $OUTPUT_DIR$FILE_NAME"
-echo "⏸️ Waiting 1 minute..."
+echo "Benchmark complete. Output saved to $OUTPUT_DIR$FILE_NAME"
+echo "Waiting 1 minute..."
 sleep 60
 
 
-echo "🚀 Running benchmarking for gRPC"
+# Thread: 16, qps: 400, time: 10m
+THREAD=16
+QPS=400
+TIME=10m
+echo "Thread: $THREAD, qps: $QPS, time: $TIME"
+
+FILE_NAME="${MESH_NAME}-http-c${THREAD}q${QPS}t${TIME}.json"
+
+# Run Fortio inside the cluster
+kubectl exec -it fortio-client -- /usr/local/bin/fortio load -c "$THREAD" -qps "$QPS" -t "$TIME" --json "/tmp/$FILE_NAME" "$FRONTEND_ENDPOINT"
+
+# Copy results from pod to local
+kubectl cp "default/fortio-client:/tmp/$FILE_NAME" "$OUTPUT_DIR$FILE_NAME"
+
+echo "Benchmark complete. Output saved to $OUTPUT_DIR$FILE_NAME"
+echo "Waiting 1 minute..."
+sleep 60
+
+
+# Thread: 32, qps: 400, time: 10m
+THREAD=32
+QPS=400
+TIME=10m
+echo "Thread: $THREAD, qps: $QPS, time: $TIME"
+
+FILE_NAME="${MESH_NAME}-http-c${THREAD}q${QPS}t${TIME}.json"
+
+# Run Fortio inside the cluster
+kubectl exec -it fortio-client -- /usr/local/bin/fortio load -c "$THREAD" -qps "$QPS" -t "$TIME" --json "/tmp/$FILE_NAME" "$FRONTEND_ENDPOINT"
+
+# Copy results from pod to local
+kubectl cp "default/fortio-client:/tmp/$FILE_NAME" "$OUTPUT_DIR$FILE_NAME"
+
+echo "Benchmark complete. Output saved to $OUTPUT_DIR$FILE_NAME"
+echo "Waiting 1 minute..."
+sleep 60
+
+
+echo "Running benchmarking for gRPC"
 OUTPUT_DIR="./results/$MESH_NAME/grpc/"
 mkdir -p "$OUTPUT_DIR"
 
@@ -91,8 +129,8 @@ kubectl exec -it fortio-client -- /usr/local/bin/fortio load -c "$THREAD" -qps "
 # Copy results from pod to local
 kubectl cp "default/fortio-client:/tmp/$FILE_NAME" "$OUTPUT_DIR$FILE_NAME"
 
-echo "✅ Benchmark complete. Output saved to $OUTPUT_DIR$FILE_NAME"
-echo "⏸️ Waiting 1 minute..."
+echo "Benchmark complete. Output saved to $OUTPUT_DIR$FILE_NAME"
+echo "Waiting 1 minute..."
 sleep 60
 
 
@@ -110,8 +148,8 @@ kubectl exec -it fortio-client -- /usr/local/bin/fortio load -c "$THREAD" -qps "
 # Copy results from pod to local
 kubectl cp "default/fortio-client:/tmp/$FILE_NAME" "$OUTPUT_DIR$FILE_NAME"
 
-echo "✅ Benchmark complete. Output saved to $OUTPUT_DIR$FILE_NAME"
-echo "⏸️ Waiting 1 minute..."
+echo "Benchmark complete. Output saved to $OUTPUT_DIR$FILE_NAME"
+echo "Waiting 1 minute..."
 sleep 60
 
 
@@ -129,6 +167,44 @@ kubectl exec -it fortio-client -- /usr/local/bin/fortio load -c "$THREAD" -qps "
 # Copy results from pod to local
 kubectl cp "default/fortio-client:/tmp/$FILE_NAME" "$OUTPUT_DIR$FILE_NAME"
 
-echo "✅ Benchmark complete. Output saved to $OUTPUT_DIR$FILE_NAME"
-echo "⏸️ Waiting 1 minute..."
+echo "Benchmark complete. Output saved to $OUTPUT_DIR$FILE_NAME"
+echo "Waiting 1 minute..."
+sleep 60
+
+
+# Thread: 16, qps: 400, time: 10m
+THREAD=16
+QPS=400
+TIME=10m
+echo "Thread: $THREAD, qps: $QPS, time: $TIME"
+
+FILE_NAME="${MESH_NAME}-grpc-c${THREAD}q${QPS}t${TIME}.json"
+
+# Run Fortio inside the cluster
+kubectl exec -it fortio-client -- /usr/local/bin/fortio load -c "$THREAD" -qps "$QPS" -t "$TIME" --json "/tmp/$FILE_NAME" --grpc "$PRODUCT_ENDPOINT"
+
+# Copy results from pod to local
+kubectl cp "default/fortio-client:/tmp/$FILE_NAME" "$OUTPUT_DIR$FILE_NAME"
+
+echo "Benchmark complete. Output saved to $OUTPUT_DIR$FILE_NAME"
+echo "Waiting 1 minute..."
+sleep 60
+
+
+# Thread: 32, qps: 400, time: 10m
+THREAD=32
+QPS=400
+TIME=10m
+echo "Thread: $THREAD, qps: $QPS, time: $TIME"
+
+FILE_NAME="${MESH_NAME}-grpc-c${THREAD}q${QPS}t${TIME}.json"
+
+# Run Fortio inside the cluster
+kubectl exec -it fortio-client -- /usr/local/bin/fortio load -c "$THREAD" -qps "$QPS" -t "$TIME" --json "/tmp/$FILE_NAME" --grpc "$PRODUCT_ENDPOINT"
+
+# Copy results from pod to local
+kubectl cp "default/fortio-client:/tmp/$FILE_NAME" "$OUTPUT_DIR$FILE_NAME"
+
+echo "Benchmark complete. Output saved to $OUTPUT_DIR$FILE_NAME"
+echo "Waiting 1 minute..."
 sleep 60
