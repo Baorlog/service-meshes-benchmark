@@ -1,6 +1,7 @@
 import os
 import json
 import csv
+import sys
 import matplotlib.pyplot as plt
 
 
@@ -41,11 +42,11 @@ def plot_latency_chart(protocol, case_id):
     print(f"Chart saved to {OUTPUT_PNG}")
 
 
-def extract_latency(protocol, case_id):
+def extract_latency(protocol, case_id, init_benchmark_time):
     # === CONFIGURATION ===
     ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
     INPUT_ROOT = os.path.abspath(os.path.join(ROOT_DIR, "..", "fortio", "results"))
-    OUTPUT_DIR = os.path.join(ROOT_DIR, "data")
+    OUTPUT_DIR = os.path.join(ROOT_DIR, "data", init_benchmark_time)
     os.makedirs(OUTPUT_DIR, exist_ok=True)
     OUTPUT_CSV = os.path.join(OUTPUT_DIR, f"data_latency_{protocol}_{case_id}.csv")
 
@@ -99,6 +100,12 @@ def extract_latency(protocol, case_id):
 
 
 if __name__ == "__main__":
+    if len(sys.argv) < 2:
+        print("Error: Usage: python3 latency_chart.py <init_benchmark_time>")
+        sys.exit(1)
+
+    init_benchmark_time = sys.argv[1]
+
     for protocol in ["http", "grpc"]:
         for case_id in ["c4q100t2m", "c8q100t10m", "c16q200t10m", "c16q400t10m", "c32q400t10m"]:
-            extract_latency(protocol=protocol, case_id=case_id)
+            extract_latency(protocol=protocol, case_id=case_id, init_benchmark_time=init_benchmark_time)

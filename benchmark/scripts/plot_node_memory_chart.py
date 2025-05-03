@@ -2,6 +2,7 @@ import os
 import json
 import matplotlib.pyplot as plt
 import datetime
+import sys
 
 # === CONFIGURATION ===
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -24,7 +25,7 @@ def load_memory_metrics(mesh):
     return times, mem_values
 
 
-def plot_node_memory_chart():
+def plot_node_memory_chart(init_benchmark_time):
     plt.figure(figsize=(12, 6))
     plotted_meshes = []
 
@@ -48,7 +49,7 @@ def plot_node_memory_chart():
             plt.grid(True)
             plt.legend()
             plt.tight_layout()
-            out_path = os.path.join(OUTPUT_DIR, f"stress_node_memory_{mesh}.png")
+            out_path = os.path.join(OUTPUT_DIR, init_benchmark_time, f"stress_node_memory_{mesh}.png")
             plt.savefig(out_path)
             plt.close()
             print(f"Saved individual chart: {out_path}")
@@ -61,11 +62,17 @@ def plot_node_memory_chart():
         plt.grid(True)
         plt.legend()
         plt.tight_layout()
-        out_path = os.path.join(OUTPUT_DIR, "stress_node_memory_chart.png")
+        out_path = os.path.join(OUTPUT_DIR, init_benchmark_time, "stress_node_memory_chart.png")
         plt.savefig(out_path)
         print(f"Saved comparison chart: {out_path}")
 
 
 # === MAIN ===
 if __name__ == "__main__":
-    plot_node_memory_chart()
+    if len(sys.argv) < 2:
+        print("Error: Usage: python3 latency_chart.py <init_benchmark_time>")
+        sys.exit(1)
+
+    init_benchmark_time = sys.argv[1]
+
+    plot_node_memory_chart(init_benchmark_time)

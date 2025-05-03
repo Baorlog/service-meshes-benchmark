@@ -3,6 +3,7 @@ import json
 import matplotlib.pyplot as plt
 import datetime
 from collections import defaultdict
+import sys
 
 # === CONFIGURATION ===
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -31,7 +32,7 @@ def load_pod_memory_metrics(mesh):
     return pod_data
 
 
-def plot_pod_memory_chart():
+def plot_pod_memory_chart(init_benchmark_time):
     total_memory_by_mesh = {}
 
     for mesh in os.listdir(METRICS_DIR):
@@ -62,7 +63,7 @@ def plot_pod_memory_chart():
         )
 
         fig.tight_layout(rect=[0, 0, 0.85, 1])
-        out_path = os.path.join(OUTPUT_DIR, f"stress_pod_memory_{mesh}.png")
+        out_path = os.path.join(OUTPUT_DIR, init_benchmark_time, f"stress_pod_memory_{mesh}.png")
         fig.savefig(out_path)
         plt.close(fig)
         print(f"Saved pod-level chart: {out_path}")
@@ -89,11 +90,17 @@ def plot_pod_memory_chart():
         plt.grid(True)
         plt.legend()
         plt.tight_layout()
-        out_path = os.path.join(OUTPUT_DIR, "stress_pod_memory_total_chart.png")
+        out_path = os.path.join(OUTPUT_DIR, init_benchmark_time, "stress_pod_memory_total_chart.png")
         plt.savefig(out_path)
         print(f"Saved total memory comparison chart: {out_path}")
 
 
 # === MAIN ===
 if __name__ == "__main__":
-    plot_pod_memory_chart()
+    if len(sys.argv) < 2:
+        print("Error: Usage: python3 latency_chart.py <init_benchmark_time>")
+        sys.exit(1)
+
+    init_benchmark_time = sys.argv[1]
+
+    plot_pod_memory_chart(init_benchmark_time)

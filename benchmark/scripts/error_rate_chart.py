@@ -1,5 +1,6 @@
 import os
 import json
+import sys
 import matplotlib.pyplot as plt
 
 # === CONFIGURATION ===
@@ -28,7 +29,7 @@ def extract_error_rates(protocol):
         for case in CASES:
             json_path = os.path.join(mesh_case_dir, f"{mesh}-{protocol}-{case}.json")
             if not os.path.isfile(json_path):
-                print(f"⚠️ Missing file: {json_path}")
+                print(f"Missing file: {json_path}")
                 error_rates.append(None)
                 continue
 
@@ -54,7 +55,7 @@ def extract_error_rates(protocol):
     return mesh_data
 
 
-def plot_error_rate_chart(protocol):
+def plot_error_rate_chart(protocol, init_benchmark_time):
     data = extract_error_rates(protocol)
 
     plt.figure(figsize=(10, 6))
@@ -69,12 +70,18 @@ def plot_error_rate_chart(protocol):
     plt.legend()
     plt.tight_layout()
 
-    output_path = os.path.join(OUTPUT_DIR, f"error_rate_{protocol}.png")
+    output_path = os.path.join(OUTPUT_DIR, init_benchmark_time, f"error_rate_{protocol}.png")
     plt.savefig(output_path)
-    print(f"✅ Saved chart to {output_path}")
+    print(f"Saved chart to {output_path}")
 
 
 # === MAIN ===
 if __name__ == "__main__":
-    plot_error_rate_chart("http")
-    plot_error_rate_chart("grpc")
+    if len(sys.argv) < 2:
+        print("Error: Usage: python3 error_rate_chart.py <init_benchmark_time>")
+        sys.exit(1)
+
+    init_benchmark_time = sys.argv[1]
+
+    plot_error_rate_chart("http", init_benchmark_time)
+    plot_error_rate_chart("grpc", init_benchmark_time)

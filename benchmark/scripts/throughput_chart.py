@@ -1,5 +1,6 @@
 import os
 import json
+import sys
 import matplotlib.pyplot as plt
 
 # === CONSTANTS ===
@@ -45,7 +46,7 @@ def extract_throughput(protocol):
     return mesh_data
 
 
-def plot_throughput_chart(protocol):
+def plot_throughput_chart(protocol, init_benchmark_time):
     data = extract_throughput(protocol)
     print(data)
 
@@ -60,12 +61,18 @@ def plot_throughput_chart(protocol):
     plt.legend()
     plt.tight_layout()
 
-    output_path = os.path.join(OUTPUT_DIR, f"throughput_{protocol}.png")
+    output_path = os.path.join(OUTPUT_DIR, init_benchmark_time, f"throughput_{protocol}.png")
     plt.savefig(output_path)
     print(f"Saved chart to {output_path}")
 
 
 # === RUN ===
 if __name__ == "__main__":
-    plot_throughput_chart("http")
-    plot_throughput_chart("grpc")
+    if len(sys.argv) < 2:
+        print("Error: Usage: python3 latency_chart.py <init_benchmark_time>")
+        sys.exit(1)
+
+    init_benchmark_time = sys.argv[1]
+
+    plot_throughput_chart("http", init_benchmark_time)
+    plot_throughput_chart("grpc", init_benchmark_time)
