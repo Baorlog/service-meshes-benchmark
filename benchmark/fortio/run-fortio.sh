@@ -74,9 +74,9 @@ echo "Waiting 1 minute..."
 sleep 60
 
 
-# Thread: 16, qps: 400, time: 10m
+# Thread: 16, qps: 4000, time: 10m
 THREAD=16
-QPS=400
+QPS=4000
 TIME=10m
 echo "Thread: $THREAD, qps: $QPS, time: $TIME"
 
@@ -93,9 +93,9 @@ echo "Waiting 1 minute..."
 sleep 60
 
 
-# Thread: 32, qps: 400, time: 10m
-THREAD=32
-QPS=400
+# Thread: 320, qps: 4000, time: 10m
+THREAD=320
+QPS=4000
 TIME=10m
 echo "Thread: $THREAD, qps: $QPS, time: $TIME"
 
@@ -173,9 +173,9 @@ echo "Waiting 1 minute..."
 sleep 60
 
 
-# Thread: 16, qps: 400, time: 10m
+# Thread: 16, qps: 4000, time: 10m
 THREAD=16
-QPS=400
+QPS=4000
 TIME=10m
 echo "Thread: $THREAD, qps: $QPS, time: $TIME"
 
@@ -192,9 +192,9 @@ echo "Waiting 1 minute..."
 sleep 60
 
 
-# Thread: 32, qps: 400, time: 10m
-THREAD=32
-QPS=400
+# Thread: 320, qps: 4000, time: 10m
+THREAD=320
+QPS=4000
 TIME=10m
 echo "Thread: $THREAD, qps: $QPS, time: $TIME"
 
