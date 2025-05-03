@@ -1,19 +1,24 @@
 import os
 import subprocess
 from datetime import datetime
+import time
 
 def run(cmd):
     print(f"Running: {cmd}")
     subprocess.run(cmd, shell=True, check=True)
 
 def main():
-    init_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+    meshes = ["baseline", "istio", "linkerd", "kuma", "traefik"]
 
-    run(f"python3 big_daddy.py baseline {init_time}")
-    run(f"python3 big_daddy.py istio {init_time}")
-    run(f"python3 big_daddy.py linkerd {init_time}")
-    run(f"python3 big_daddy.py kuma {init_time}")
-    run(f"python3 big_daddy.py traefik {init_time}")
+    for i in range(3):  # Run 3 rounds
+        init_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
+        print(f"\n--- Run {i+1}/3 - init_benchmark_time = {init_time} ---\n")
+
+        for mesh in meshes:
+            run(f"python3 big_daddy.py {mesh} {init_time}")
+
+        # Optional: short delay between runs to avoid overlapping timestamps
+        time.sleep(2)
 
 if __name__ == "__main__":
     main()

@@ -6,6 +6,7 @@ START="$1"
 END="$2"
 MESH_NAME="$3"
 DIR="$4"
+INIT_BENCHMARK_TIME="$5"
 
 cd $DIR
 
@@ -22,7 +23,7 @@ query_and_save() {
   local query="$1"
   local type="$2"   # node or pod
   local name="$3"   # e.g., node_cpu
-  local out_dir="./$type/${MESH_NAME}"
+  local out_dir="./$type/$INIT_BENCHMARK_TIME/${MESH_NAME}"
   mkdir -p $out_dir
   local outfile="${out_dir}/${name}_${MESH_NAME}.json"
 

@@ -2,6 +2,7 @@
 
 MESH_NAME="$1"
 DIR="$2"
+INIT_BENCHMARK_TIME="$3"
 
 cd $DIR
 
@@ -13,7 +14,7 @@ FRONTEND_ENDPOINT="http://frontend.default.svc.cluster.local:80"
 PRODUCT_ENDPOINT="productcatalogservice.default.svc.cluster.local:3550"
 
 echo "Running benchmarking for HTTP"
-OUTPUT_DIR="./results/$MESH_NAME/http/"
+OUTPUT_DIR="./results/$INIT_BENCHMARK_TIME/$MESH_NAME/http/"
 mkdir -p "$OUTPUT_DIR"
 
 # Thread: 4, qps: 100, time: 2m
@@ -112,7 +113,7 @@ sleep 60
 
 
 echo "Running benchmarking for gRPC"
-OUTPUT_DIR="./results/$MESH_NAME/grpc/"
+OUTPUT_DIR="./results/$INIT_BENCHMARK_TIME/$MESH_NAME/grpc/"
 mkdir -p "$OUTPUT_DIR"
 
 # Thread: 4, qps: 100, time: 2m

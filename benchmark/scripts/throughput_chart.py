@@ -2,6 +2,7 @@ import os
 import json
 import sys
 import matplotlib.pyplot as plt
+from collections import defaultdict
 
 # === CONSTANTS ===
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
@@ -11,44 +12,52 @@ OUTPUT_DIR = os.path.join(ROOT_DIR, "data")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 
-def extract_throughput(protocol):
+def extract_throughput(protocol, init_benchmark_times):
     """
     Returns a dict:
     {
-      'istio': [63.6, 97.2, 186.5],
-      'linkerd': [...],
+      'istio': [avg_c1, avg_c2, avg_c3, avg_c4, avg_c5],
       ...
     }
     """
-    mesh_data = {}
+    mesh_case_data = defaultdict(lambda: defaultdict(list))
 
-    for mesh in os.listdir(RESULTS_ROOT):
-        print(mesh)
-        mesh_case_dir = os.path.join(RESULTS_ROOT, mesh, protocol)
-        if not os.path.isdir(mesh_case_dir):
+    for timestamp in init_benchmark_times:
+        timestamp_dir = os.path.join(RESULTS_ROOT, timestamp)
+        if not os.path.isdir(timestamp_dir):
+            print(f"Skipping missing folder: {timestamp_dir}")
             continue
 
-        qps_values = []
-        for case in CASES:
-            json_path = os.path.join(mesh_case_dir, f"{mesh}-{protocol}-{case}.json")
-            if not os.path.isfile(json_path):
-                print(f"Missing file: {json_path}")
-                qps_values.append(0)
+        for mesh in os.listdir(timestamp_dir):
+            protocol_dir = os.path.join(timestamp_dir, mesh, protocol)
+            if not os.path.isdir(protocol_dir):
                 continue
 
-            with open(json_path, "r") as f:
-                data = json.load(f)
-                actual_qps = round(data.get("ActualQPS", 0), 2)
-                qps_values.append(actual_qps)
+            for case in CASES:
+                file_path = os.path.join(protocol_dir, f"{mesh}-{protocol}-{case}.json")
+                if not os.path.isfile(file_path):
+                    print(f"Missing: {file_path}")
+                    continue
 
-        mesh_data[mesh] = qps_values
+                with open(file_path, "r") as f:
+                    data = json.load(f)
+                    actual_qps = round(data.get("ActualQPS", 0), 2)
+                    mesh_case_data[mesh][case].append(actual_qps)
+
+    # Aggregate by averaging per mesh/case
+    mesh_data = {}
+    for mesh, case_map in mesh_case_data.items():
+        mesh_data[mesh] = [
+            round(sum(case_map[case]) / len(case_map[case]), 2) if case_map[case] else 0
+            for case in CASES
+        ]
 
     return mesh_data
 
 
-def plot_throughput_chart(protocol, init_benchmark_time):
-    data = extract_throughput(protocol)
-    print(data)
+def plot_throughput_chart(protocol, init_benchmark_times):
+    data = extract_throughput(protocol, init_benchmark_times)
+    print(f"Aggregated throughput data ({protocol}): {data}")
 
     plt.figure(figsize=(10, 6))
     for mesh, qps_list in data.items():
@@ -61,18 +70,18 @@ def plot_throughput_chart(protocol, init_benchmark_time):
     plt.legend()
     plt.tight_layout()
 
-    output_path = os.path.join(OUTPUT_DIR, init_benchmark_time, f"throughput_{protocol}.png")
-    plt.savefig(output_path)
-    print(f"Saved chart to {output_path}")
+    out_file = os.path.join(OUTPUT_DIR, f"throughput_{protocol}.png")
+    plt.savefig(out_file)
+    print(f"Saved chart to {out_file}")
 
 
 # === RUN ===
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Error: Usage: python3 latency_chart.py <init_benchmark_time>")
+        print("Error: Usage: python3 throughput_chart.py <init_benchmark_time> [more_times...]")
         sys.exit(1)
 
-    init_benchmark_time = sys.argv[1]
+    init_benchmark_times = sys.argv[1:]
 
-    plot_throughput_chart("http", init_benchmark_time)
-    plot_throughput_chart("grpc", init_benchmark_time)
+    plot_throughput_chart("http", init_benchmark_times)
+    plot_throughput_chart("grpc", init_benchmark_times)
