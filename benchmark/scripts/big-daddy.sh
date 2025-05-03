@@ -35,13 +35,12 @@ fi
 
 # === 3. Run Fortio and K6 benchmarks ===
 echo "Running Fortio HTTP + gRPC tests..."
-# You will define these scripts later, so we assume their names for now
 cd ./benchmark/fortio
 ./run-fortio.sh "$MESH_NAME" "$PWD"
 
-# echo "Running K6 user flow tests..."
-# cd ../k6
-# ./run-tests.sh "$MESH_NAME" "$PWD"
+echo "Running K6 user flow tests..."
+cd ../k6
+./run-tests.sh "$MESH_NAME" "$PWD"
 
 # === 4. Wait until results are complete (placeholder logic) ===
 # Optional: check if result files exist

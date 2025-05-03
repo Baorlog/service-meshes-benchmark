@@ -45,7 +45,7 @@ spec:
           tar -xzf fortio-linux_amd64-1.69.1.tgz && \
           cp usr/bin/fortio /usr/local/bin/ && \
           chmod +x /usr/local/bin/fortio && \
-          echo "✅ Fortio is ready!" && \
+          echo "Fortio is ready!" && \
           tail -f /dev/null
       ports:
         - containerPort: 8080
