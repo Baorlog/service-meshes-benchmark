@@ -1,0 +1,100 @@
+{
+  "RunType": "GRPC Health for ''",
+  "Labels": "productcatalogservice.default.svc.cluster.local:3550 , fortio-client",
+  "StartTime": "2025-05-04T07:55:20.466589101Z",
+  "RequestedQPS": "100",
+  "RequestedDuration": "2m0s",
+  "ActualQPS": 99.99900048332377,
+  "ActualDuration": 120001199432,
+  "NumThreads": 4,
+  "Version": "1.69.1",
+  "DurationHistogram": {
+    "Count": 12000,
+    "Min": 0.000106551,
+    "Max": 0.006211567,
+    "Sum": 6.202122319000002,
+    "Avg": 0.0005168435265833335,
+    "StdDev": 0.000220606058856326,
+    "Data": [
+      {
+        "Start": 0.000106551,
+        "End": 0.001,
+        "Percent": 98.85,
+        "Count": 11862
+      },
+      {
+        "Start": 0.001,
+        "End": 0.002,
+        "Percent": 99.94166666666666,
+        "Count": 131
+      },
+      {
+        "Start": 0.002,
+        "End": 0.003,
+        "Percent": 99.95833333333333,
+        "Count": 2
+      },
+      {
+        "Start": 0.005,
+        "End": 0.006,
+        "Percent": 99.975,
+        "Count": 2
+      },
+      {
+        "Start": 0.006,
+        "End": 0.006211567,
+        "Percent": 100,
+        "Count": 3
+      }
+    ],
+    "Percentiles": [
+      {
+        "Percentile": 50,
+        "Value": 0.0005584353732400305
+      },
+      {
+        "Percentile": 75,
+        "Value": 0.0007844152231683669
+      },
+      {
+        "Percentile": 90,
+        "Value": 0.0009200031331253689
+      },
+      {
+        "Percentile": 99,
+        "Value": 0.0011374045801526768
+      },
+      {
+        "Percentile": 99.9,
+        "Value": 0.001961832061068711
+      }
+    ]
+  },
+  "ErrorsDurationHistogram": {
+    "Count": 0,
+    "Min": 0,
+    "Max": 0,
+    "Sum": 0,
+    "Avg": 0,
+    "StdDev": 0,
+    "Data": null
+  },
+  "Exactly": 0,
+  "Jitter": false,
+  "Uniform": false,
+  "NoCatchUp": false,
+  "RunID": 0,
+  "AccessLoggerInfo": "",
+  "ID": "2025-05-04-075520_productcatalogservice_default_svc_cluster_local_3550_fortio_client",
+  "RetCodes": {
+    "SERVING": 12000
+  },
+  "Destination": "productcatalogservice.default.svc.cluster.local:3550",
+  "Streams": 1,
+  "Ping": false,
+  "Metadata": {
+    "user-agent": [
+      "fortio.org/fortio-1.69.1"
+    ]
+  }
+}

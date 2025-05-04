@@ -1,0 +1,172 @@
+{
+    "metrics": {
+        "http_req_duration{expected_response:true}": {
+            "avg": 129.89263705360614,
+            "min": 2.808136,
+            "med": 23.500205,
+            "max": 5200.84895,
+            "p(90)": 384.9794302,
+            "p(95)": 575.4351953999998
+        },
+        "http_req_duration": {
+            "p(90)": 117.507142,
+            "p(95)": 303.618653,
+            "avg": 58.75114897473185,
+            "min": 0.080596,
+            "med": 1.360685,
+            "max": 5200.84895
+        },
+        "http_req_tls_handshaking": {
+            "max": 0,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0,
+            "min": 0,
+            "med": 0
+        },
+        "data_sent": {
+            "count": 9715534,
+            "rate": 13413.64510739413
+        },
+        "iterations": {
+            "rate": 10.662674966132059,
+            "count": 7723
+        },
+        "http_req_sending": {
+            "min": 0.002829,
+            "med": 0.011803,
+            "max": 2.586443,
+            "p(90)": 0.028504,
+            "p(95)": 0.038141,
+            "avg": 0.01643174365993967
+        },
+        "http_req_waiting": {
+            "avg": 56.85661760749925,
+            "min": 0.066942,
+            "med": 1.251111,
+            "max": 5200.602927,
+            "p(90)": 112.485911,
+            "p(95)": 299.590225
+        },
+        "group_duration": {
+            "p(90)": 2001.298511,
+            "p(95)": 2001.739511,
+            "avg": 1345.0713905432278,
+            "min": 1000.145633,
+            "med": 1034.502161,
+            "max": 6201.032077
+        },
+        "vus": {
+            "max": 200,
+            "value": 3,
+            "min": 0
+        },
+        "http_req_connecting": {
+            "max": 2.157628,
+            "p(90)": 0,
+            "p(95)": 0,
+            "avg": 0.001008980281533823,
+            "min": 0,
+            "med": 0
+        },
+        "http_reqs": {
+            "count": 54061,
+            "rate": 74.63872476292441
+        },
+        "http_req_failed": {
+            "passes": 30892,
+            "fails": 23169,
+            "value": 0.5714285714285714
+        },
+        "data_received": {
+            "rate": 324986.0411387237,
+            "count": 235388137
+        },
+        "iteration_duration": {
+            "avg": 9415.782015775978,
+            "min": 9020.7377,
+            "med": 9213.729779,
+            "max": 15099.044955,
+            "p(90)": 9915.466601,
+            "p(95)": 10298.2101446
+        },
+        "http_req_blocked": {
+            "avg": 0.006860956179130942,
+            "min": 0.001077,
+            "med": 0.004261,
+            "max": 2.398786,
+            "p(90)": 0.00973,
+            "p(95)": 0.012856
+        },
+        "http_req_receiving": {
+            "p(95)": 0.655507,
+            "avg": 1.8780996235733542,
+            "min": 0.00406,
+            "med": 0.053974,
+            "max": 302.384993,
+            "p(90)": 0.349773
+        },
+        "vus_max": {
+            "value": 200,
+            "min": 200,
+            "max": 200
+        }
+    },
+    "root_group": {
+        "name": "",
+        "path": "",
+        "id": "d41d8cd98f00b204e9800998ecf8427e",
+        "groups": {
+            "Visit homepage": {
+                "groups": {},
+                "checks": {},
+                "name": "Visit homepage",
+                "path": "::Visit homepage",
+                "id": "fad1e6c0c5ed4fe1e395235b0e3dcc0b"
+            },
+            "Change currency": {
+                "name": "Change currency",
+                "path": "::Change currency",
+                "id": "aa52a91e451191a2b7105d86cfb01fc0",
+                "groups": {},
+                "checks": {}
+            },
+            "Browse products": {
+                "path": "::Browse products",
+                "id": "f45e069332b4857f63de9b1ca3f697fe",
+                "groups": {},
+                "checks": {},
+                "name": "Browse products"
+            },
+            "View a product": {
+                "name": "View a product",
+                "path": "::View a product",
+                "id": "992a6671c627f7108d2895530fe677f7",
+                "groups": {},
+                "checks": {}
+            },
+            "Add to cart": {
+                "checks": {},
+                "name": "Add to cart",
+                "path": "::Add to cart",
+                "id": "0f1d4b13c85de4427f714b4a353019fa",
+                "groups": {}
+            },
+            "View cart": {
+                "name": "View cart",
+                "path": "::View cart",
+                "id": "30ed069d2a9a41cd54bdc10408269e71",
+                "groups": {},
+                "checks": {}
+            },
+            "Checkout": {
+                "name": "Checkout",
+                "path": "::Checkout",
+                "id": "18269b63e1041a7cf6efa072538123bd",
+                "groups": {},
+                "checks": {}
+            }
+        },
+        "checks": {}
+    }
+}

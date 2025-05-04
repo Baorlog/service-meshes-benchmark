@@ -1,0 +1,94 @@
+{
+  "RunType": "GRPC Health for ''",
+  "Labels": "productcatalogservice.default.svc.cluster.local:3550 , fortio-client",
+  "StartTime": "2025-05-04T15:55:43.544273629Z",
+  "RequestedQPS": "100",
+  "RequestedDuration": "2m0s",
+  "ActualQPS": 99.99763983237189,
+  "ActualDuration": 120002832268,
+  "NumThreads": 4,
+  "Version": "1.69.1",
+  "DurationHistogram": {
+    "Count": 12000,
+    "Min": 0.000087441,
+    "Max": 0.003902226,
+    "Sum": 6.112919257999996,
+    "Avg": 0.0005094099381666664,
+    "StdDev": 0.00020598952773610293,
+    "Data": [
+      {
+        "Start": 0.000087441,
+        "End": 0.001,
+        "Percent": 98.61666666666666,
+        "Count": 11834
+      },
+      {
+        "Start": 0.001,
+        "End": 0.002,
+        "Percent": 99.94166666666666,
+        "Count": 159
+      },
+      {
+        "Start": 0.002,
+        "End": 0.003,
+        "Percent": 99.96666666666667,
+        "Count": 3
+      },
+      {
+        "Start": 0.003,
+        "End": 0.003902226,
+        "Percent": 100,
+        "Count": 4
+      }
+    ],
+    "Percentiles": [
+      {
+        "Percentile": 50,
+        "Value": 0.0005500828863348264
+      },
+      {
+        "Percentile": 75,
+        "Value": 0.0007814423894194204
+      },
+      {
+        "Percentile": 90,
+        "Value": 0.0009202580912701767
+      },
+      {
+        "Percentile": 99,
+        "Value": 0.0012893081761006333
+      },
+      {
+        "Percentile": 99.9,
+        "Value": 0.001968553459119504
+      }
+    ]
+  },
+  "ErrorsDurationHistogram": {
+    "Count": 0,
+    "Min": 0,
+    "Max": 0,
+    "Sum": 0,
+    "Avg": 0,
+    "StdDev": 0,
+    "Data": null
+  },
+  "Exactly": 0,
+  "Jitter": false,
+  "Uniform": false,
+  "NoCatchUp": false,
+  "RunID": 0,
+  "AccessLoggerInfo": "",
+  "ID": "2025-05-04-155543_productcatalogservice_default_svc_cluster_local_3550_fortio_client",
+  "RetCodes": {
+    "SERVING": 12000
+  },
+  "Destination": "productcatalogservice.default.svc.cluster.local:3550",
+  "Streams": 1,
+  "Ping": false,
+  "Metadata": {
+    "user-agent": [
+      "fortio.org/fortio-1.69.1"
+    ]
+  }
+}
