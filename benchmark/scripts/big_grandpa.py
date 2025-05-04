@@ -10,9 +10,9 @@ def run(cmd):
 def main():
     meshes = ["baseline", "istio", "linkerd", "kuma", "traefik"]
 
-    for i in range(3):  # Run 3 rounds
+    for i in range(2):  # Run 2 rounds
         init_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
-        print(f"\n--- Run {i+1}/3 - init_benchmark_time = {init_time} ---\n")
+        print(f"\n--- Run {i+1}/2 - init_benchmark_time = {init_time} ---\n")
 
         for mesh in meshes:
             run(f"python3 big_daddy.py {mesh} {init_time}")
