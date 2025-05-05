@@ -10,13 +10,7 @@ def run(cmd):
     print(f"Running: {cmd}")
     subprocess.run(cmd, shell=True, check=True)
 
-
-if __name__ == "__main__":
-    init_benchmark_times = sys.argv[1:]
-    if not init_benchmark_times:
-        print("No benchmark times defined, use in-code instead")
-        init_benchmark_times = DEFAULT_INIT_BENCHMARK_TIMES
-
+def extract_all(init_benchmark_times: list):
     init_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
     run_id = f"{generate_random_name()}_{init_time}"
 
@@ -30,3 +24,12 @@ if __name__ == "__main__":
     with open(os.path.join(OUTPUT_DIR, "time_keep.txt"), "a") as file:
         for time in init_benchmark_times:
             file.write(f"{time}\n")
+
+
+if __name__ == "__main__":
+    init_benchmark_times = sys.argv[1:]
+    if not init_benchmark_times:
+        print("No benchmark times defined, use in-code instead")
+        init_benchmark_times = DEFAULT_INIT_BENCHMARK_TIMES
+
+    extract_all(init_benchmark_times)
