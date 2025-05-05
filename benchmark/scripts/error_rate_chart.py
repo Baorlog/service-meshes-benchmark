@@ -61,7 +61,7 @@ def extract_error_rates(protocol, timestamps):
 
     return mesh_data
 
-def plot_error_rate_chart(protocol, timestamps):
+def plot_error_rate_chart(protocol, timestamps, run_id):
     data = extract_error_rates(protocol, timestamps)
 
     plt.figure(figsize=(10, 6))
@@ -76,17 +76,18 @@ def plot_error_rate_chart(protocol, timestamps):
     plt.legend()
     plt.tight_layout()
 
-    out_path = os.path.join(OUTPUT_DIR, f"error_rate_{protocol}.png")
+    out_path = os.path.join(OUTPUT_DIR, run_id, f"error_rate_{protocol}.png")
     plt.savefig(out_path)
     print(f"Saved chart to {out_path}")
 
 # === MAIN ===
 if __name__ == "__main__":
+    run_id = sys.argv[1]
     if len(sys.argv) < 2:
         print("Error: Usage: python3 error_rate_chart.py <init_benchmark_time1> [time2 ...]")
         sys.exit(1)
 
-    timestamps = sys.argv[1:]
+    timestamps = sys.argv[2:]
 
-    plot_error_rate_chart("http", timestamps)
-    plot_error_rate_chart("grpc", timestamps)
+    plot_error_rate_chart("http", timestamps, run_id)
+    plot_error_rate_chart("grpc", timestamps, run_id)

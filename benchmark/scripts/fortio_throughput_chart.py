@@ -55,7 +55,7 @@ def extract_throughput(protocol, init_benchmark_times):
     return mesh_data
 
 
-def plot_throughput_chart(protocol, init_benchmark_times):
+def plot_throughput_chart(protocol, init_benchmark_times, run_id):
     data = extract_throughput(protocol, init_benchmark_times)
     print(f"Aggregated throughput data ({protocol}): {data}")
 
@@ -70,18 +70,19 @@ def plot_throughput_chart(protocol, init_benchmark_times):
     plt.legend()
     plt.tight_layout()
 
-    out_file = os.path.join(OUTPUT_DIR, f"throughput_{protocol}.png")
+    out_file = os.path.join(OUTPUT_DIR, run_id, f"throughput_{protocol}.png")
     plt.savefig(out_file)
     print(f"Saved chart to {out_file}")
 
 
 # === RUN ===
 if __name__ == "__main__":
+    run_id = sys.argv[1]
     if len(sys.argv) < 2:
         print("Error: Usage: python3 throughput_chart.py <init_benchmark_time> [more_times...]")
         sys.exit(1)
 
-    init_benchmark_times = sys.argv[1:]
+    init_benchmark_times = sys.argv[2:]
 
-    plot_throughput_chart("http", init_benchmark_times)
-    plot_throughput_chart("grpc", init_benchmark_times)
+    plot_throughput_chart("http", init_benchmark_times, run_id)
+    plot_throughput_chart("grpc", init_benchmark_times, run_id)

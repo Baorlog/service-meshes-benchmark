@@ -52,7 +52,7 @@ def extract_k6_throughput(init_benchmark_times):
 
     return averaged
 
-def plot_line_chart(case_data):
+def plot_line_chart(case_data, run_id):
     plt.figure(figsize=(10, 6))
     mesh_names = set()
     for case in case_data:
@@ -69,11 +69,11 @@ def plot_line_chart(case_data):
     plt.grid(True)
     plt.legend()
     plt.tight_layout()
-    line_chart_path = os.path.join(OUTPUT_DIR, "k6_throughput.png")
+    line_chart_path = os.path.join(OUTPUT_DIR, run_id, "k6_throughput.png")
     plt.savefig(line_chart_path)
     print(f"Saved chart to {line_chart_path}")
 
-def plot_bar_charts(case_data):
+def plot_bar_charts(case_data, run_id):
     for case, mesh_rates in case_data.items():
         meshes = list(mesh_rates.keys())
         values = list(mesh_rates.values())
@@ -91,16 +91,17 @@ def plot_bar_charts(case_data):
         plt.ylim(y_min - padding, y_max + padding)
 
         plt.tight_layout()
-        out_file = os.path.join(OUTPUT_DIR, f"k6_throughput_{case}.png")
+        out_file = os.path.join(OUTPUT_DIR, run_id, f"k6_throughput_{case}.png")
         plt.savefig(out_file)
         print(f"Saved chart to {out_file}")
 
 if __name__ == "__main__":
+    run_id = sys.argv[1]
     if len(sys.argv) < 2:
         print("Usage: python3 k6_throughput_chart.py <timestamp1> [timestamp2...]")
         sys.exit(1)
 
-    timestamps = sys.argv[1:]
+    timestamps = sys.argv[2:]
     case_data = extract_k6_throughput(timestamps)
-    plot_line_chart(case_data)
-    plot_bar_charts(case_data)
+    plot_line_chart(case_data, run_id)
+    plot_bar_charts(case_data, run_id)

@@ -31,10 +31,10 @@ def plot_latency_chart(protocol, case_id, output_csv, output_png):
     plt.savefig(output_png)
     print(f"Chart saved to {output_png}")
 
-def extract_latency(protocol, case_id, init_benchmark_times):
+def extract_latency(protocol, case_id, init_benchmark_times, run_id):
     ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
     INPUT_ROOT = os.path.abspath(os.path.join(ROOT_DIR, "..", "fortio", "results"))
-    OUTPUT_DIR = os.path.join(ROOT_DIR, "data")
+    OUTPUT_DIR = os.path.join(ROOT_DIR, "data", run_id)
     os.makedirs(OUTPUT_DIR, exist_ok=True)
 
     OUTPUT_CSV = os.path.join(OUTPUT_DIR, f"data_latency_{protocol}_{case_id}.csv")
@@ -96,11 +96,12 @@ def extract_latency(protocol, case_id, init_benchmark_times):
     plot_latency_chart(protocol, case_id, OUTPUT_CSV, OUTPUT_PNG)
 
 if __name__ == "__main__":
-    init_benchmark_times = sys.argv[1:]
+    run_id = sys.argv[1]
+    init_benchmark_times = sys.argv[2:]
     if not init_benchmark_times:
         print("Error: Please pass at least one benchmark timestamp folder")
         sys.exit(1)
 
     for protocol in ["http", "grpc"]:
         for case_id in ["c4q100t2m", "c8q100t10m", "c16q200t10m", "c16q400t10m", "c32q400t10m"]:
-            extract_latency(protocol, case_id, init_benchmark_times)
+            extract_latency(protocol, case_id, init_benchmark_times, run_id)
