@@ -34,6 +34,6 @@ if __name__ == "__main__":
         print("Error: Usage: python3 big_grandpa.py <iterating_time>")
         sys.exit(1)
 
-    print(f"Big grandpa is now running {iterating_time} round({"s" if iterating_time > 1 else ""})")
+    print(f"Big grandpa is now running {iterating_time} round({'s' if iterating_time > 1 else ''})")
 
     main(iterating_time)
