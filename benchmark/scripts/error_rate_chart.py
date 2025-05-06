@@ -7,7 +7,7 @@ from collections import defaultdict
 # === CONFIGURATION ===
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
 RESULTS_ROOT = os.path.abspath(os.path.join(ROOT_DIR, "..", "fortio", "results"))
-CASES = ["c4q100t2m", "c8q100t10m", "c16q200t10m", "c16q400t10m", "c128q400t10m"]
+CASES = ["c4q100t2m", "c8q100t10m", "c16q200t10m", "c16q400t10m", "c64q400t10m"]
 OUTPUT_DIR = os.path.join(ROOT_DIR, "data")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 

@@ -103,5 +103,5 @@ if __name__ == "__main__":
         sys.exit(1)
 
     for protocol in ["http", "grpc"]:
-        for case_id in ["c4q100t2m", "c8q100t10m", "c16q200t10m", "c16q400t10m", "c128q400t10m"]:
+        for case_id in ["c4q100t2m", "c8q100t10m", "c16q200t10m", "c16q400t10m", "c64q400t10m"]:
             extract_latency(protocol, case_id, init_benchmark_times, run_id)
