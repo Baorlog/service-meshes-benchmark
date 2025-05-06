@@ -3,17 +3,18 @@ import subprocess
 from datetime import datetime
 import time
 from extract_granny import extract_all
+import sys
 
 def run(cmd):
     print(f"Running: {cmd}")
     subprocess.run(cmd, shell=True, check=True)
 
-def main():
+def main(iterating_time):
     meshes = ["baseline", "istio", "linkerd", "kuma", "traefik"]
 
     init_benchmark_times = []
 
-    for i in range(2):  # Run 2 rounds
+    for i in range(iterating_time): 
         init_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
         init_benchmark_times.append(init_time)
         print(f"\n--- Run {i+1}/2 - init_benchmark_time = {init_time} ---\n")
@@ -27,4 +28,10 @@ def main():
     extract_all(init_benchmark_times)
 
 if __name__ == "__main__":
-    main()
+    iterating_time = sys.argv[1]
+
+    if len(sys.argv) < 1:
+        print("Error: Usage: python3 big_grandpa.py <iterating_time>")
+        sys.exit(1)
+
+    main(iterating_time)
