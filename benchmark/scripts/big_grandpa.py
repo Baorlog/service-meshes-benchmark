@@ -28,12 +28,12 @@ def main(iterating_time):
     extract_all(init_benchmark_times)
 
 if __name__ == "__main__":
-    iterating_time = sys.argv[1]
+    iterating_time = int(sys.argv[1])
 
     if len(sys.argv) < 1:
         print("Error: Usage: python3 big_grandpa.py <iterating_time>")
         sys.exit(1)
 
-    print(f"Big grandpa is now running {iterating_time} round({'s' if iterating_time > 1 else ''})")
+    print(f"Big grandpa is now running {iterating_time} round{'s' if iterating_time > 1 else ''}")
 
     main(iterating_time)
