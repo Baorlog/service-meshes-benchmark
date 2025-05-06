@@ -26,16 +26,18 @@ run_fortio() {
   local file_name="${MESH_NAME}-${protocol}-${case_label}.json"
 
   local endpoint="$FRONTEND_ENDPOINT"
-
+  local proto_flag=""
+  
   if [ "$protocol" = "grpc" ]; then
     endpoint="$PRODUCT_ENDPOINT"
+    proto_flag="--grpc "
   fi
 
   echo "Running Fortio $protocol test - Case $case_label"
   echo "Thread: $connections, qps: $qps, time: $duration"
 
   # Run Fortio inside the cluster
-  kubectl exec -it fortio-client -- /usr/local/bin/fortio load -c "$connections" -qps "$qps" -t "$duration" --json "/tmp/$file_name" "$endpoint"
+  kubectl exec -it fortio-client -- /usr/local/bin/fortio load -c "$connections" -qps "$qps" -t "$duration" --json "/tmp/$file_name" $proto_flag"$endpoint"
 
   # Copy results from pod to local directory
   kubectl cp "default/fortio-client:/tmp/$file_name" "$output_dir$file_name"
