@@ -1,0 +1,184 @@
+{
+  "RunType": "GRPC Health for ''",
+  "Labels": "productcatalogservice.default.svc.cluster.local:3550 , fortio-client",
+  "StartTime": "2025-05-07T08:52:28.599140613Z",
+  "RequestedQPS": "400",
+  "RequestedDuration": "10m0s",
+  "ActualQPS": 399.99908696608406,
+  "ActualDuration": 600001369554,
+  "NumThreads": 16,
+  "Version": "1.69.1",
+  "DurationHistogram": {
+    "Count": 240000,
+    "Min": 0.000092713,
+    "Max": 0.044019818,
+    "Sum": 124.51158028300004,
+    "Avg": 0.0005187982511791669,
+    "StdDev": 0.0005544613647495428,
+    "Data": [
+      {
+        "Start": 0.000092713,
+        "End": 0.001,
+        "Percent": 94.26166666666667,
+        "Count": 226228
+      },
+      {
+        "Start": 0.001,
+        "End": 0.002,
+        "Percent": 99.53166666666667,
+        "Count": 12648
+      },
+      {
+        "Start": 0.002,
+        "End": 0.003,
+        "Percent": 99.71833333333333,
+        "Count": 448
+      },
+      {
+        "Start": 0.003,
+        "End": 0.004,
+        "Percent": 99.74041666666666,
+        "Count": 53
+      },
+      {
+        "Start": 0.004,
+        "End": 0.005,
+        "Percent": 99.77791666666667,
+        "Count": 90
+      },
+      {
+        "Start": 0.005,
+        "End": 0.006,
+        "Percent": 99.80583333333334,
+        "Count": 67
+      },
+      {
+        "Start": 0.006,
+        "End": 0.007,
+        "Percent": 99.88291666666667,
+        "Count": 185
+      },
+      {
+        "Start": 0.007,
+        "End": 0.008,
+        "Percent": 99.9475,
+        "Count": 155
+      },
+      {
+        "Start": 0.008,
+        "End": 0.009000000000000001,
+        "Percent": 99.95416666666667,
+        "Count": 16
+      },
+      {
+        "Start": 0.009000000000000001,
+        "End": 0.01,
+        "Percent": 99.95958333333333,
+        "Count": 13
+      },
+      {
+        "Start": 0.01,
+        "End": 0.011,
+        "Percent": 99.96916666666667,
+        "Count": 23
+      },
+      {
+        "Start": 0.011,
+        "End": 0.012,
+        "Percent": 99.97208333333333,
+        "Count": 7
+      },
+      {
+        "Start": 0.012,
+        "End": 0.014,
+        "Percent": 99.97875,
+        "Count": 16
+      },
+      {
+        "Start": 0.014,
+        "End": 0.016,
+        "Percent": 99.97916666666667,
+        "Count": 1
+      },
+      {
+        "Start": 0.016,
+        "End": 0.018000000000000002,
+        "Percent": 99.98041666666667,
+        "Count": 3
+      },
+      {
+        "Start": 0.018000000000000002,
+        "End": 0.02,
+        "Percent": 99.98125,
+        "Count": 2
+      },
+      {
+        "Start": 0.02,
+        "End": 0.025,
+        "Percent": 99.99,
+        "Count": 21
+      },
+      {
+        "Start": 0.025,
+        "End": 0.03,
+        "Percent": 99.99791666666667,
+        "Count": 19
+      },
+      {
+        "Start": 0.04,
+        "End": 0.044019818,
+        "Percent": 100,
+        "Count": 5
+      }
+    ],
+    "Percentiles": [
+      {
+        "Percentile": 50,
+        "Value": 0.0005739709078226736
+      },
+      {
+        "Percentile": 75,
+        "Value": 0.0008146018669920036
+      },
+      {
+        "Percentile": 90,
+        "Value": 0.0009589804424936016
+      },
+      {
+        "Percentile": 99,
+        "Value": 0.001899114484503479
+      },
+      {
+        "Percentile": 99.9,
+        "Value": 0.007264516129032245
+      }
+    ]
+  },
+  "ErrorsDurationHistogram": {
+    "Count": 0,
+    "Min": 0,
+    "Max": 0,
+    "Sum": 0,
+    "Avg": 0,
+    "StdDev": 0,
+    "Data": null
+  },
+  "Exactly": 0,
+  "Jitter": false,
+  "Uniform": false,
+  "NoCatchUp": false,
+  "RunID": 0,
+  "AccessLoggerInfo": "",
+  "ID": "2025-05-07-085228_productcatalogservice_default_svc_cluster_local_3550_fortio_client",
+  "RetCodes": {
+    "SERVING": 240000
+  },
+  "Destination": "productcatalogservice.default.svc.cluster.local:3550",
+  "Streams": 1,
+  "Ping": false,
+  "Metadata": {
+    "user-agent": [
+      "fortio.org/fortio-1.69.1"
+    ]
+  }
+}

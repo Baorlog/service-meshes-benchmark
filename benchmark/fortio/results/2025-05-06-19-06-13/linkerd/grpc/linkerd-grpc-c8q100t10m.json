@@ -1,0 +1,118 @@
+{
+  "RunType": "GRPC Health for ''",
+  "Labels": "productcatalogservice.default.svc.cluster.local:3550 , fortio-client",
+  "StartTime": "2025-05-06T17:17:05.520108363Z",
+  "RequestedQPS": "100",
+  "RequestedDuration": "10m0s",
+  "ActualQPS": 99.99973525053426,
+  "ActualDuration": 600001588501,
+  "NumThreads": 8,
+  "Version": "1.69.1",
+  "DurationHistogram": {
+    "Count": 60000,
+    "Min": 0.00025977,
+    "Max": 0.007931195,
+    "Sum": 84.13463514000011,
+    "Avg": 0.0014022439190000018,
+    "StdDev": 0.0005366431938541234,
+    "Data": [
+      {
+        "Start": 0.00025977,
+        "End": 0.001,
+        "Percent": 32.64,
+        "Count": 19584
+      },
+      {
+        "Start": 0.001,
+        "End": 0.002,
+        "Percent": 90.78833333333333,
+        "Count": 34889
+      },
+      {
+        "Start": 0.002,
+        "End": 0.003,
+        "Percent": 99.85166666666667,
+        "Count": 5438
+      },
+      {
+        "Start": 0.003,
+        "End": 0.004,
+        "Percent": 99.94333333333333,
+        "Count": 55
+      },
+      {
+        "Start": 0.004,
+        "End": 0.005,
+        "Percent": 99.97,
+        "Count": 16
+      },
+      {
+        "Start": 0.005,
+        "End": 0.006,
+        "Percent": 99.98333333333333,
+        "Count": 8
+      },
+      {
+        "Start": 0.006,
+        "End": 0.007,
+        "Percent": 99.98666666666666,
+        "Count": 2
+      },
+      {
+        "Start": 0.007,
+        "End": 0.007931195,
+        "Percent": 100,
+        "Count": 8
+      }
+    ],
+    "Percentiles": [
+      {
+        "Percentile": 50,
+        "Value": 0.0012985468199145863
+      },
+      {
+        "Percentile": 75,
+        "Value": 0.0017284817564275274
+      },
+      {
+        "Percentile": 90,
+        "Value": 0.001986442718335292
+      },
+      {
+        "Percentile": 99,
+        "Value": 0.0029060316292754684
+      },
+      {
+        "Percentile": 99.9,
+        "Value": 0.003527272727272784
+      }
+    ]
+  },
+  "ErrorsDurationHistogram": {
+    "Count": 0,
+    "Min": 0,
+    "Max": 0,
+    "Sum": 0,
+    "Avg": 0,
+    "StdDev": 0,
+    "Data": null
+  },
+  "Exactly": 0,
+  "Jitter": false,
+  "Uniform": false,
+  "NoCatchUp": false,
+  "RunID": 0,
+  "AccessLoggerInfo": "",
+  "ID": "2025-05-06-171705_productcatalogservice_default_svc_cluster_local_3550_fortio_client",
+  "RetCodes": {
+    "SERVING": 60000
+  },
+  "Destination": "productcatalogservice.default.svc.cluster.local:3550",
+  "Streams": 1,
+  "Ping": false,
+  "Metadata": {
+    "user-agent": [
+      "fortio.org/fortio-1.69.1"
+    ]
+  }
+}
