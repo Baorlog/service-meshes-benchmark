@@ -14,10 +14,10 @@ def extract_all(init_benchmark_times: list):
     init_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
     run_id = f"{generate_random_name()}_{init_time}"
 
-    run(f"python3 latency_chart.py {run_id} {' '.join(init_benchmark_times)}")
+    run(f"python3 forito_latency_chart.py {run_id} {' '.join(init_benchmark_times)}")
     run(f"python3 fortio_throughput_chart.py {run_id} {' '.join(init_benchmark_times)}")
     run(f"python3 k6_throughput_chart.py {run_id} {' '.join(init_benchmark_times)}")
-    run(f"python3 error_rate_chart.py {run_id} {' '.join(init_benchmark_times)}")
+    run(f"python3 fortio_error_rate_chart.py {run_id} {' '.join(init_benchmark_times)}")
 
     ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
     OUTPUT_DIR = os.path.join(ROOT_DIR, "data", run_id)

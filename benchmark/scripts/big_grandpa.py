@@ -17,7 +17,7 @@ def main(iterating_time):
     for i in range(iterating_time): 
         init_time = datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
         init_benchmark_times.append(init_time)
-        print(f"\n--- Run {i+1}/2 - init_benchmark_time = {init_time} ---\n")
+        print(f"\n--- Run {i+1}/{iterating_time} - init_benchmark_time = {init_time} ---\n")
 
         for mesh in meshes:
             run(f"python3 big_daddy.py {mesh} {init_time}")

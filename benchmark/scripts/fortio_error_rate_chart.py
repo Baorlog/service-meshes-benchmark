@@ -76,6 +76,7 @@ def plot_error_rate_chart(protocol, timestamps, run_id):
     plt.legend()
     plt.tight_layout()
 
+    os.makedirs(os.path.join(OUTPUT_DIR, run_id), exist_ok=True)
     out_path = os.path.join(OUTPUT_DIR, run_id, f"error_rate_{protocol}.png")
     plt.savefig(out_path)
     print(f"Saved chart to {out_path}")

@@ -69,6 +69,7 @@ def plot_line_chart(case_data, run_id):
     plt.grid(True)
     plt.legend()
     plt.tight_layout()
+    os.makedirs(os.path.join(OUTPUT_DIR, run_id), exist_ok=True)
     line_chart_path = os.path.join(OUTPUT_DIR, run_id, "k6_throughput.png")
     plt.savefig(line_chart_path)
     print(f"Saved chart to {line_chart_path}")

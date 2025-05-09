@@ -4,15 +4,12 @@ import sys
 import matplotlib.pyplot as plt
 from collections import defaultdict
 
-# === CONSTANTS ===
+# === CONFIGURATION ===
 ROOT_DIR = os.path.abspath(os.path.dirname(__file__))
 K6_ROOT = os.path.abspath(os.path.join(ROOT_DIR, "..", "k6", "results"))
 OUTPUT_DIR = os.path.join(ROOT_DIR, "data")
 K6_CASES = ["summary_case1.json", "summary_case2.json", "summary_case3.json"]
 
-os.makedirs(OUTPUT_DIR, exist_ok=True)
-
-# Use consistent color mapping
 COLOR_MAP = {
     "kuma": "#1f77b4",
     "istio": "#ff7f0e",
@@ -21,7 +18,9 @@ COLOR_MAP = {
     "linkerd": "#9467bd"
 }
 
-def extract_k6_error_rate(init_benchmark_times):
+os.makedirs(OUTPUT_DIR, exist_ok=True)
+
+def extract_k6_latency(init_benchmark_times):
     mesh_case_data = defaultdict(lambda: defaultdict(list))
 
     for timestamp in init_benchmark_times:
@@ -41,18 +40,14 @@ def extract_k6_error_rate(init_benchmark_times):
 
                 with open(file_path, "r") as f:
                     data = json.load(f)
-                    failed_metric = data.get("metrics", {}).get("http_req_failed", {})
-                    fails = failed_metric.get("fails", 0)
-                    passes = failed_metric.get("passes", 0)
-                    total = fails + passes
-                    rate = round(fails / total, 4) if total > 0 else 0
-                    mesh_case_data[f"case{idx+1}"][mesh].append(rate)
+                    duration = data.get("metrics", {}).get("http_req_duration", {})
+                    avg = duration.get("avg", 0)
+                    mesh_case_data[f"case{idx+1}"][mesh].append(round(avg, 2))
 
-    # Average across timestamps
     averaged = defaultdict(dict)
     for case, mesh_data in mesh_case_data.items():
         for mesh, values in mesh_data.items():
-            averaged[case][mesh] = round(sum(values) / len(values), 4) if values else 0
+            averaged[case][mesh] = round(sum(values) / len(values), 2) if values else 0
 
     return averaged
 
@@ -67,14 +62,14 @@ def plot_line_chart(case_data, run_id):
         values = [case_data[case].get(mesh, 0) for case in sorted(case_data)]
         plt.plot(sorted(case_data), values, marker="o", label=mesh, color=COLOR_MAP.get(mesh, None))
 
-    plt.title("Error Rate - HTTP (K6)")
+    plt.title("Latency - HTTP (K6)")
     plt.xlabel("Test Case")
-    plt.ylabel("Error Rate")
+    plt.ylabel("Avg Latency (ms)")
     plt.grid(True)
     plt.legend()
     plt.tight_layout()
     os.makedirs(os.path.join(OUTPUT_DIR, run_id), exist_ok=True)
-    line_chart_path = os.path.join(OUTPUT_DIR, run_id, "k6_error_rate.png")
+    line_chart_path = os.path.join(OUTPUT_DIR, run_id, "k6_latency.png")
     plt.savefig(line_chart_path)
     print(f"Saved chart to {line_chart_path}")
 
@@ -86,27 +81,27 @@ def plot_bar_charts(case_data, run_id):
 
         plt.figure(figsize=(8, 6))
         bars = plt.bar(meshes, values, color=colors)
-        plt.title(f"Error Rate - K6 - {case}")
+        plt.title(f"Latency - K6 - {case}")
         plt.xlabel("Service Mesh")
-        plt.ylabel("Error Rate")
+        plt.ylabel("Avg Latency (ms)")
 
         y_min = min(values)
         y_max = max(values)
-        padding = (y_max - y_min) * 0.15 if y_max != y_min else 0.01
+        padding = (y_max - y_min) * 0.15 if y_max != y_min else 5
         plt.ylim(y_min - padding, y_max + padding)
 
         plt.tight_layout()
-        out_file = os.path.join(OUTPUT_DIR, run_id, f"k6_error_rate_{case}.png")
+        out_file = os.path.join(OUTPUT_DIR, run_id, f"k6_latency_{case}.png")
         plt.savefig(out_file)
         print(f"Saved chart to {out_file}")
 
 if __name__ == "__main__":
     run_id = sys.argv[1]
     if len(sys.argv) < 2:
-        print("Usage: python3 k6_error_rate_chart.py <run_id> <timestamp1> [timestamp2...]")
+        print("Usage: python3 k6_latency_chart.py <run_id> <timestamp1> [timestamp2...]")
         sys.exit(1)
 
     timestamps = sys.argv[2:]
-    case_data = extract_k6_error_rate(timestamps)
+    case_data = extract_k6_latency(timestamps)
     plot_line_chart(case_data, run_id)
     plot_bar_charts(case_data, run_id)

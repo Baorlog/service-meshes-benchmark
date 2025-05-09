@@ -70,6 +70,7 @@ def plot_throughput_chart(protocol, init_benchmark_times, run_id):
     plt.legend()
     plt.tight_layout()
 
+    os.makedirs(os.path.join(OUTPUT_DIR, run_id), exist_ok=True)
     out_file = os.path.join(OUTPUT_DIR, run_id, f"throughput_{protocol}.png")
     plt.savefig(out_file)
     print(f"Saved chart to {out_file}")
