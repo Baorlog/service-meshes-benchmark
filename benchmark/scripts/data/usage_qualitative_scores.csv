@@ -1,0 +1,5 @@
+Metric,Istio,Linkerd,Kuma,Traefik,Consul,AWS App Mesh
+Vượt tiêu chí, 11, 7, 12, 7, 7, 6
+Đạt tiêu chí, 2, 7, 2, 6, 3, 2
+Không đạt, 1, 0, 0, 1, 4, 6
+Tổng điểm, 24, 21, 26, 20, 17, 14

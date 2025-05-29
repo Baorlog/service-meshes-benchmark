@@ -52,15 +52,22 @@ def extract_k6_latency(init_benchmark_times):
     return averaged
 
 def plot_line_chart(case_data, run_id):
+    # Thêm marker style và line style nhưng vẫn giữ nguyên màu
+    marker_styles = ['o', 's', '^', 'D', '*', 'v', 'x', '+']
+    line_styles = ['-', '--', '-.', ':']
+
     plt.figure(figsize=(10, 6))
     mesh_names = set()
     for case in case_data:
         mesh_names.update(case_data[case].keys())
 
     mesh_names = sorted(mesh_names)
-    for mesh in mesh_names:
+    for i, mesh in enumerate(mesh_names):
+        marker = marker_styles[i % len(marker_styles)]
+        line_style = line_styles[i % len(line_styles)]
+        color = COLOR_MAP.get(mesh, None)
         values = [case_data[case].get(mesh, 0) for case in sorted(case_data)]
-        plt.plot(sorted(case_data), values, marker="o", label=mesh, color=COLOR_MAP.get(mesh, None))
+        plt.plot(sorted(case_data), values, marker=marker, linestyle=line_style, color=color, label=mesh)
 
     plt.title("Latency - HTTP (K6)")
     plt.xlabel("Test Case")
@@ -80,7 +87,8 @@ def plot_bar_charts(case_data, run_id):
         colors = [COLOR_MAP.get(mesh, "#7f7f7f") for mesh in meshes]
 
         plt.figure(figsize=(8, 6))
-        bars = plt.bar(meshes, values, color=colors)
+        bars = plt.bar(meshes, values, color=colors, edgecolor='black')  # Giữ màu, thêm viền đen để nổi bật
+
         plt.title(f"Latency - K6 - {case}")
         plt.xlabel("Service Mesh")
         plt.ylabel("Avg Latency (ms)")

@@ -23,12 +23,17 @@ averages = df.drop(columns=["Time"]).mean()
 
 # === PLOT ===
 plt.figure(figsize=(8, 5))
-colors = [COLOR_MAP.get(mesh.lower(), "#7f7f7f") for mesh in averages.index]
-averages.plot(kind="bar", color=colors)
+bars = plt.bar(
+    averages.index,
+    averages.values,
+    color=[COLOR_MAP.get(mesh.lower(), "#7f7f7f") for mesh in averages.index],
+    edgecolor='black'  # Thêm viền đen
+)
+
 plt.title("Average Startup Time of Service Meshes")
 plt.xlabel("Service Mesh")
 plt.ylabel("Startup Time (seconds)")
-plt.grid(axis="y")
+plt.grid(axis="y", linestyle="--", linewidth=0.5)
 plt.tight_layout()
 plt.savefig(OUTPUT_PATH)
 print(f"Saved chart to {OUTPUT_PATH}")

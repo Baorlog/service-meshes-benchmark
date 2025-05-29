@@ -59,9 +59,15 @@ def plot_throughput_chart(protocol, init_benchmark_times, run_id):
     data = extract_throughput(protocol, init_benchmark_times)
     print(f"Aggregated throughput data ({protocol}): {data}")
 
+    # Thêm marker style và line style để phân biệt đen trắng
+    marker_styles = ['o', 's', '^', 'D', '*', 'v', 'x', '+']
+    line_styles = ['-', '--', '-.', ':']
+
     plt.figure(figsize=(10, 6))
-    for mesh, qps_list in data.items():
-        plt.plot(CASES, qps_list, marker="o", label=mesh)
+    for i, (mesh, qps_list) in enumerate(data.items()):
+        marker = marker_styles[i % len(marker_styles)]
+        line_style = line_styles[i % len(line_styles)]
+        plt.plot(CASES, qps_list, marker=marker, linestyle=line_style, label=mesh)
 
     plt.title(f"Throughput - {protocol.upper()}")
     plt.xlabel("Test Case")

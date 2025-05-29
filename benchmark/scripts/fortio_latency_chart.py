@@ -18,9 +18,15 @@ def plot_latency_chart(protocol, case_id, output_csv, output_png):
             values = list(map(float, row[1:]))
             data[mesh] = values
 
+    # Thêm marker style và line style để phân biệt đen trắng
+    marker_styles = ['o', 's', '^', 'D', '*', 'v', 'x', '+']
+    line_styles = ['-', '--', '-.', ':']
+
     plt.figure(figsize=(10, 6))
-    for mesh, values in data.items():
-        plt.plot(x_labels, values, marker="o", label=mesh)
+    for i, (mesh, values) in enumerate(data.items()):
+        marker = marker_styles[i % len(marker_styles)]
+        line_style = line_styles[i % len(line_styles)]
+        plt.plot(x_labels, values, marker=marker, linestyle=line_style, label=mesh)
 
     plt.title(f"Latency - {str(protocol).upper()} - {case_id}")
     plt.xlabel("Percentile / Metric")

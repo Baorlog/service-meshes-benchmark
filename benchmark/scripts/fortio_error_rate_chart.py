@@ -64,9 +64,15 @@ def extract_error_rates(protocol, timestamps):
 def plot_error_rate_chart(protocol, timestamps, run_id):
     data = extract_error_rates(protocol, timestamps)
 
+    # Thêm marker style và line style để phân biệt đen trắng
+    marker_styles = ['o', 's', '^', 'D', '*', 'v', 'x', '+']
+    line_styles = ['-', '--', '-.', ':']
+
     plt.figure(figsize=(10, 6))
-    for mesh, error_list in data.items():
-        plt.plot(CASES, error_list, marker="o", label=mesh)
+    for i, (mesh, error_list) in enumerate(data.items()):
+        marker = marker_styles[i % len(marker_styles)]
+        line_style = line_styles[i % len(line_styles)]
+        plt.plot(CASES, error_list, marker=marker, linestyle=line_style, label=mesh)
 
     plt.title(f"Error Rate - {protocol.upper()}")
     plt.xlabel("Test Case")
