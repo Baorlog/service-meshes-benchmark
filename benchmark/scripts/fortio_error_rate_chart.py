@@ -1,6 +1,7 @@
 import os
 import json
 import sys
+import math
 import matplotlib.pyplot as plt
 from collections import defaultdict
 
@@ -12,13 +13,6 @@ OUTPUT_DIR = os.path.join(ROOT_DIR, "data")
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def extract_error_rates(protocol, timestamps):
-    """
-    Returns a dict:
-    {
-        'istio': [avg_rate_case1, avg_rate_case2, ...],
-        ...
-    }
-    """
     mesh_case_data = defaultdict(lambda: defaultdict(list))
 
     for timestamp in timestamps:
@@ -48,14 +42,14 @@ def extract_error_rates(protocol, timestamps):
                         if code.startswith("2") or code.upper() in ["0", "OK", "SERVING"]:
                             success_count += count
 
-                    error_rate = 1.0 if total == 0 else round(1 - (success_count / total), 4)
+                    error_rate = 1.0 if total == 0 else round(1 - (success_count / total), 10)
                     mesh_case_data[mesh][case].append(error_rate)
 
     # Average across runs
     mesh_data = {}
     for mesh, case_map in mesh_case_data.items():
         mesh_data[mesh] = [
-            round(sum(case_map[case]) / len(case_map[case]), 4) if case_map[case] else 1.0
+            round(sum(case_map[case]) / len(case_map[case]), 10) if case_map[case] else 1.0
             for case in CASES
         ]
 
@@ -64,7 +58,12 @@ def extract_error_rates(protocol, timestamps):
 def plot_error_rate_chart(protocol, timestamps, run_id):
     data = extract_error_rates(protocol, timestamps)
 
-    # Thêm marker style và line style để phân biệt đen trắng
+    for mesh, error_list in data.items():
+        for i, val in enumerate(error_list):
+            if val == 0:
+                error_list[i] = 1e-10
+            error_list[i] = math.log10(error_list[i])
+
     marker_styles = ['o', 's', '^', 'D', '*', 'v', 'x', '+']
     line_styles = ['-', '--', '-.', ':']
 
@@ -74,26 +73,31 @@ def plot_error_rate_chart(protocol, timestamps, run_id):
         line_style = line_styles[i % len(line_styles)]
         plt.plot(CASES, error_list, marker=marker, linestyle=line_style, label=mesh)
 
-    plt.title(f"Error Rate - {protocol.upper()}")
+        # Hiển thị giá trị chính xác tại điểm cuối cùng
+        x_val = CASES[-1]
+        y_val = error_list[-1]
+        display_val = round(10**y_val, 10)  # Lấy lại error rate thực tế
+        plt.text(x_val, y_val, f"{display_val:.1e}", fontsize=8, ha='center', va='bottom', color='black')
+
+    plt.title(f"Error Rate (log10) - {protocol.upper()}")
     plt.xlabel("Test Case")
-    plt.ylabel("Error Rate")
-    plt.ylim(0, 1)
+    plt.ylabel("log10(Error Rate)")
     plt.grid(True)
     plt.legend()
     plt.tight_layout()
 
     os.makedirs(os.path.join(OUTPUT_DIR, run_id), exist_ok=True)
-    out_path = os.path.join(OUTPUT_DIR, run_id, f"error_rate_{protocol}.png")
+    out_path = os.path.join(OUTPUT_DIR, run_id, f"error_rate_{protocol}_log10.png")
     plt.savefig(out_path)
     print(f"Saved chart to {out_path}")
 
 # === MAIN ===
 if __name__ == "__main__":
-    run_id = sys.argv[1]
-    if len(sys.argv) < 2:
-        print("Error: Usage: python3 error_rate_chart.py <init_benchmark_time1> [time2 ...]")
+    if len(sys.argv) < 3:
+        print("Error: Usage: python3 fortio_error_rate_chart.py <run_id> <init_benchmark_time1> [time2 ...]")
         sys.exit(1)
 
+    run_id = sys.argv[1]
     timestamps = sys.argv[2:]
 
     plot_error_rate_chart("http", timestamps, run_id)

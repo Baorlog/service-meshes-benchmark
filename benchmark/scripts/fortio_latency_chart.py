@@ -101,6 +101,71 @@ def extract_latency(protocol, case_id, init_benchmark_times, run_id):
     print(f"CSV saved to {OUTPUT_CSV}")
     plot_latency_chart(protocol, case_id, OUTPUT_CSV, OUTPUT_PNG)
 
+def generate_two_mesh_comparison_chart(protocol, case_id, run_id):
+    import matplotlib.pyplot as plt
+    import os
+
+    csv_path = os.path.join("data", run_id, f"data_latency_{protocol}_{case_id}.csv")
+    output_path = os.path.join("data", run_id, f"comparison_latency_{protocol}_{case_id}.png")
+
+    if not os.path.exists(csv_path):
+        print(f"CSV not found: {csv_path}")
+        return
+
+    data = {}
+    metrics = []
+
+    with open(csv_path, "r") as f:
+        reader = csv.reader(f)
+        headers = next(reader)
+        metrics = headers[1:]
+
+        for row in reader:
+            mesh = row[0].strip().lower()
+            if mesh in ["baseline", "istio"]:
+                data[mesh] = list(map(float, row[1:]))
+
+    if "baseline" not in data or "istio" not in data:
+        print(f"Not enough data in {csv_path}")
+        return
+
+    # Style giống biểu đồ gốc
+    style_map = {
+        "baseline": {"label": "Baseline", "color": "#2ca02c", "linestyle": "-.", "marker": "^"},
+        "istio": {"label": "Istio", "color": "#ff7f0e", "linestyle": "--", "marker": "s"},
+    }
+
+    plt.figure(figsize=(10, 6))
+    for mesh in ["baseline", "istio"]:
+        style = style_map[mesh]
+        plt.plot(
+            metrics,
+            data[mesh],
+            label=style["label"],
+            color=style["color"],
+            linestyle=style["linestyle"],
+            marker=style["marker"],
+        )
+
+    plt.title(f"{protocol.upper()} Latency: Baseline vs Istio - {case_id}")
+    plt.xlabel("Metric")
+    plt.ylabel("Latency (ms)")
+    plt.grid(True)
+    plt.legend()
+    plt.tight_layout()
+    plt.savefig(output_path)
+    print(f"Chart saved: {output_path}")
+
+    def percentage_diff(a, b):
+        return round((b - a) / a * 100, 2) if a else float("inf")
+
+    baseline_avg, baseline_max = data["baseline"][0], data["baseline"][-1]
+    istio_avg, istio_max = data["istio"][0], data["istio"][-1]
+
+    print(f"Case {case_id} ({protocol.upper()}):")
+    print(f"  Avg Latency Diff: {percentage_diff(baseline_avg, istio_avg)}%")
+    print(f"  Max Latency Diff: {percentage_diff(baseline_max, istio_max)}%")
+
 if __name__ == "__main__":
     run_id = sys.argv[1]
     init_benchmark_times = sys.argv[2:]
@@ -111,3 +176,7 @@ if __name__ == "__main__":
     for protocol in ["http", "grpc"]:
         for case_id in ["c4q100t2m", "c8q100t10m", "c16q200t10m", "c16q400t10m", "c64q400t10m"]:
             extract_latency(protocol, case_id, init_benchmark_times, run_id)
+
+    for protocol in ["http", "grpc"]:
+        for case_id in ["c4q100t2m", "c64q400t10m"]:
+            generate_two_mesh_comparison_chart(protocol, case_id, run_id)
